@@ -24,7 +24,7 @@
 This procedure assumes you have installed miniConda on Summit in a directory that you own. For instructions on how to do this, please see:
 [Miniconda on Power9](https://docs.conda.io/en/latest/miniconda.html)
 
-These steps will likely atrophy, but as of 6/10/2019:
+In brief, here are the steps to install Miniconda on Summit. These steps will likely atrophy, but as of 6/10/2019:
 
 ```
 # ssh onto Summit login node
@@ -37,14 +37,22 @@ chmod 755 ./Miniconda3-latest-Linux-ppc64le.sh
 ```
 
 Once Miniconda is installed, you'll need to create a conda environement for openMM:
+
 ```
 conda create -n openmm731_cuda101 python=3.7.3
 ```
 
+(the following instructions are adapted from [Installing OpenMM on Summit](https://github.com/inspiremd/conda-recipes-summit))
+
 Next, activate this environement:
 ```conda activate openmm731_cuda101```
 
-
+Add conda-forge and omnia to your channel list and update packages
+```
+conda config --add channels omnia --add channels conda-forge
+# Update to conda-forge versions of packages
+conda update --yes --all
+```
 
 
 
