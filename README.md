@@ -39,21 +39,39 @@ chmod 755 ./Miniconda3-latest-Linux-ppc64le.sh
 Once Miniconda is installed, you'll need to create a conda environement for openMM:
 
 ```
-conda create -n openmm731_cuda101 python=3.7.3
+conda create -n openmm740_cuda101 python=3.7.3
 ```
 
 (the following instructions are adapted from [Installing OpenMM on Summit](https://github.com/inspiremd/conda-recipes-summit))
 
-Next, activate this environement:
-```conda activate openmm731_cuda101```
+Activate this environement:
+```conda activate openmm740_cuda101```
 
 Add conda-forge and omnia to your channel list and update packages
 ```
 conda config --add channels omnia --add channels conda-forge
-# Update to conda-forge versions of packages
 conda update --yes --all
 ```
 
+Next, install OpenMM:
+```
+conda install --yes -c omnia-dev/label/cuda92 openmm
+```
+
+Note: in the above, cuda92 is referenced, but we need to use cuda10.1.105. In order to do so, we need to rebuild several packages first. 
+
+To rebuild these packages, you'll need to grab a copy of [this GitHub repository](https://github.com/inspiremd/conda-recipes-summit):
+
+```
+cd where_you_want_to_download_the_git_repo
+git clone https://github.com/inspiremd/conda-recipes-summit.git
+cd conda-recipes-summit/
+
+```
+
+```
+conda install numpy swig fftw3f doxygen pymbar
+```
 
 
 #### Python Libraries
