@@ -1,52 +1,41 @@
-- [Heading](#heading)
-  * [Sub-heading](#sub-heading)
-    + [Sub-sub-heading](#sub-sub-heading)
-- [Heading](#heading-1)
-  * [Sub-heading](#sub-heading-1)
-    + [Sub-sub-heading](#sub-sub-heading-1)
-- [Heading](#heading-2)
-  * [Sub-heading](#sub-heading-2)
-    + [Sub-sub-heading](#sub-sub-heading-2)
+# Table of contents:
+- [Install Dependencies](#install-dependencies)
+  * [OpenMM](#openmm)
+  * [Python Libraries](#python-libraries)
+  * [VMD](#vmd)
+- [Nomenclature](#nomenclature)
 
-
-# Heading levels
-
-> This is a fixture to test heading levels
-
+- [Job-specific files](#job-specific-files)
+  * [./common](#common)
+  * [./tcls](#tcls)
+- [Workflow](#workflow)
+  * [Step 1: Initial structures](#initial-structures)
+  * [Step 2: Generate swarm directory structure](#step-2-generate-swarm-directory-structure)
+  * [Step 3: Launching a swarm](#step-3-launching-a-swarm)
+  * [Step 4: Concatenate swarm subjobs](#step-4-concatenate-swarm-subjobs)
+  * [Step 5: Calculate tICA parameters](#step-5-calculate-tica-parameters)
+  * [Step 6: Calculate tICA projection and select frames for next swarm](step-6-calculate-tica-projection-and-select-frames-for-next-swarm)
+  * [Step 7: Repeat prior steps!](#step-7-repeat-prior-steps)
 <!-- toc -->
+---
+# Install Dependencies
 
-## Heading
+### OpenMM
+### Python Libraries
+### VMD
 
-This is an h1 heading
+# Nomenclature
+ 
+# Job-specific files
+### ./common
+### ./tcls
 
-### Sub-heading
+# Workflow
 
-This is an h2 heading
-
-#### Sub-sub-heading
-
-This is an h3 heading
-
-## Heading
-
-This is an h1 heading
-
-### Sub-heading
-
-This is an h2 heading
-
-#### Sub-sub-heading
-
-This is an h3 heading
-
-## Heading
-
-This is an h1 heading
-
-### Sub-heading
-
-This is an h2 heading
-
-#### Sub-sub-heading
-
-This is an h3 heading
+### Step 1: Initial structures
+### Step 2: Generate swarm directory structure
+### Step 3: Launching a swarm
+### Step 4: Concatenate swarm subjobs
+### Step 5: Calculate tICA parameters
+### Step 6: Calculate tICA projection and select frames for next swarm
+### Step 7: Repeat prior steps!
