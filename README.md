@@ -58,7 +58,12 @@ Next, install OpenMM:
 conda install --yes -c omnia-dev/label/cuda92 openmm
 ```
 
-Note: in the above, cuda92 is referenced, but we need to use cuda10.1.105. In order to do so, we need to rebuild several packages first. 
+Note: in the above, cuda92 is referenced, but we need to use cuda10.1.105. In order to do so, we need to rebuild several packages and openMM first. 
+
+Before rebuilding any packages, we'll first need to install a few more packages:
+```
+conda install numpy swig fftw3f doxygen pymbar
+```
 
 To rebuild these packages, you'll need to grab a copy of [this GitHub repository](https://github.com/inspiremd/conda-recipes-summit):
 
@@ -66,12 +71,20 @@ To rebuild these packages, you'll need to grab a copy of [this GitHub repository
 cd where_you_want_to_download_the_git_repo
 git clone https://github.com/inspiremd/conda-recipes-summit.git
 cd conda-recipes-summit/
-
+conda build --numpy 1.13.1 --python 3.6.3 parmed
+conda install --use-local parmed
 ```
 
+Note: in the above I reference python 3.6.3--this is because python gets downgraded due to dependency-python compatibility issues.
+
+Finally, it's time to rebuild openMM:
+
 ```
-conda install numpy swig fftw3f doxygen pymbar
-```
+module unload cuda
+module load cuda/10.1.105
+CUDA_VERSION="10.1" CUDA_SHORT_VERSION="101" conda build --numpy 1.15 --python 3.6 openmm
+
+
 
 
 #### Python Libraries
