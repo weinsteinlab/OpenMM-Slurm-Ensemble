@@ -21,6 +21,33 @@
 # Install Dependencies
 
 #### OpenMM
+This procedure assumes you have installed miniConda on Summit in a directory that you own. For instructions on how to do this, please see:
+[Miniconda on Power9](https://docs.conda.io/en/latest/miniconda.html)
+
+These steps will likely atrophy, but as of 6/10/2019:
+
+```
+# ssh onto Summit login node
+cd where_you_wish_to_download_Miniconda_installer
+wget 'https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-ppc64le.sh'
+chmod 755 ./Miniconda3-latest-Linux-ppc64le.sh
+./Miniconda3-latest-Linux-ppc64le.sh
+
+# follow instructions from installer
+```
+
+Once Miniconda is installed, you'll need to create a conda environement for openMM:
+```
+conda create -n openmm731_cuda101 python=3.7.3
+```
+
+Next, activate this environement:
+```conda activate openmm731_cuda101```
+
+
+
+
+
 #### Python Libraries
 #### VMD
 
