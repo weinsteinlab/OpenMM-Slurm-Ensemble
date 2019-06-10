@@ -20,22 +20,23 @@
 ---
 # Install Dependencies
 
-### OpenMM
-### Python Libraries
-### VMD
+#### OpenMM
+#### Python Libraries
+#### VMD
 
 # Nomenclature
- 
+
 # Job-specific files
-### ./common
-### ./tcls
+#### ./common
+#### ./tcls
 
 # Workflow
 
-### Step 1: Initial structures
-### Step 2: Generate swarm directory structure
-### Step 3: Launching a swarm
-### Step 4: Concatenate swarm subjobs
-### Step 5: Calculate tICA parameters
-### Step 6: Calculate tICA projection and select frames for next swarm
-### Step 7: Repeat prior steps!
+#### Step 1: Initial structures
+#### Step 2: Generate swarm directory structure
+#### Step 3: Launching a swarm
+#### Step 4: Concatenate swarm subjobs
+#### Step 5: Calculate tICA parameters
+#### Step 6: Calculate tICA projection and select frames for next swarm
+#### Step 7: Repeat prior steps!
+---
