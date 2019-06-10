@@ -84,6 +84,7 @@ module unload cuda
 module load cuda/10.1.105
 CUDA_VERSION="10.1" CUDA_SHORT_VERSION="101" conda build --numpy 1.15 --python 3.6 openmm
 
+```
 
 
 
