@@ -23,7 +23,7 @@ swarm_path=$CWD/raw_swarms/swarm${swarm_number_padded}
 for ((traj_number=0; traj_number<$number_of_trajs_per_swarm; traj_number++))
 do
   traj_number_padded=`printf %04d $traj_number`
-  traj_path=$swarm_path/swarm${swarm_number_padded}_trajs$traj_number_padded
+  traj_path=$swarm_path/swarm${swarm_number_padded}_traj$traj_number_padded
   
   if [[ "$swarm_number" -eq 0 ]]; then
     cp $CWD/initial_structures/${traj_number_padded}*.pdb $traj_path/.
