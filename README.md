@@ -37,7 +37,6 @@ chmod 755 ./Miniconda3-latest-Linux-ppc64le.sh
 ```
 
 Once Miniconda is installed, you'll need to create a conda environement for openMM:
-
 ```
 conda create -n openmm740_cuda101 python=3.7.3
 ```
@@ -45,7 +44,9 @@ conda create -n openmm740_cuda101 python=3.7.3
 (the following instructions are adapted from [Installing OpenMM on Summit](https://github.com/inspiremd/conda-recipes-summit))
 
 Activate this environement:
-```conda activate openmm740_cuda101```
+```
+conda activate openmm740_cuda101
+```
 
 Add conda-forge and omnia to your channel list and update packages
 ```
