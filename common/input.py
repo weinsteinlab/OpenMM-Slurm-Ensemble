@@ -31,11 +31,12 @@ xsc_file = open(xsc_file_name[0], 'r')
 xsc_last_line = xsc_file.read().splitlines()[-1].split(' ')
 xsc_file.close()
 
-x_PBC_vector = ((xsc_last_line[1])+'*angstroms', xsc_last_line[2]+'*angstroms', xsc_last_line[3]+'*angstroms')
-y_PBC_vector = ((xsc_last_line[4])+'*angstroms', xsc_last_line[5]+'*angstroms', xsc_last_line[6]+'*angstroms')
-z_PBC_vector = ((xsc_last_line[7])+'*angstroms', xsc_last_line[7]+'*angstroms', xsc_last_line[9]+'*angstroms')
+# Divide by 10 because NAMD xsc is in angstroms, whereas nanometers is the default in openMM
+x_PBC_vector_length = float(xsc_last_line[1])/10
+y_PBC_vector_length = float(xsc_last_line[5])/10
+z_PBC_vector_length = float(xsc_last_line[9])/10
   
-psf.setBox(x_PBC_vector, y_PBC_vector, z_PBC_vector)
+psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 
 # System Configuration
 
