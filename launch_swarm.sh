@@ -17,14 +17,15 @@ last_subjob=3
 # do not edit below this line
 
 first_iteration=0
+number_of_nodes=`expr $number_of_trajs_per_swarm / 6`
 
 for (( subjob=$first_subjob; subjob<=$last_subjob; subjob++ ))
 do
   if [ $first_iteration -eq 0 ]
   then
-    job_scheduler_output="$(bsub -P BIP180 -W 0:15 -nnodes 3 -J openMM_test_ensemble -alloc_flags gpumps ./submit_swarm_subjobs.sh $swarm_number $number_of_trajs_per_swarm $subjob)"
+    job_scheduler_output="$(bsub -P BIP180 -W 0:15 -nnodes $number_of_nodes -J openMM_test_ensemble -alloc_flags gpumps ./submit_swarm_subjobs.sh $swarm_number $number_of_trajs_per_swarm $subjob)"
   else
-    job_scheduler_output="$(bsub -P BIP180 -W 0:15 -nnodes 3 -J openMM_test_ensemble -alloc_flags gpumps -w $job_scheduler_number ./submit_swarm_subjobs.sh $swarm_number $number_of_trajs_per_swarm $subjob)"
+    job_scheduler_output="$(bsub -P BIP180 -W 0:15 -nnodes $number_of_nodes -J openMM_test_ensemble -alloc_flags gpumps -w $job_scheduler_number ./submit_swarm_subjobs.sh $swarm_number $number_of_trajs_per_swarm $subjob)"
   fi
 
   job_scheduler_number=$(echo $job_scheduler_output | awk '{print $2}' | sed -e 's/<//' | sed -e 's/>//')
