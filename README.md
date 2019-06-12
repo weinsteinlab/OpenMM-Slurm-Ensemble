@@ -169,7 +169,7 @@ This directory contains all of the tcl scripts, run by VMD, to measure pre-defin
 # Workflow
 
 ### Step 1: Initial structures
-This first step of this workflow is to create a directory with many copies of the initial pdb. This directory is used in later steps in constructing swarms of MD simulations. A **swarm** is simply a set of independently run MD simulations that may or may not have a common starting conformation. **Note:** duplicating the initial structure is obviously inefficient, but not particularily expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
+This first step of this workflow is to create a directory with many copies of the initial pdb file. This directory is used in later steps in constructing swarms of MD simulations. A **swarm** is simply a set of independently run MD simulations that may or may not have a common starting conformation. **Note:** duplicating the initial structure is obviously inefficient, but not particularily expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
 
 To create this directory, open ```populate_initial_structures.sh``` in vim, and edit the following variables:
 ```
@@ -177,8 +177,17 @@ number_of_trajs_per_swarm=18
 structure_file='dat_phase2b4.coor' # must be in ./common
 ```
 
-```number_of_trajs_per_swarm``` is the number of MD simulations (hereafter trajectories) per MD swarm.
-```structure_file='dat_phase2b4.coor'``` is the name of the initial structure (must be .pdb or .coor, and can't be a binary file). No path is given because this file is assumed to be in `./common` and is enclosed in single quotes.
+`number_of_trajs_per_swarm` is the number of MD simulations (hereafter trajectories) per MD swarm.
+`structure_file='dat_phase2b4.coor'` is the name of the initial structure (must be `.pdb` or `.coor`, and can't be a binary file). No path is given because this file is assumed to be in `./common` and is enclosed in single quotes.
+
+After editing this file, generate the inital structures directory with the following command:
+```
+./populate_initial_structures.sh
+```
+
+**Note:** this step is so lightweight that it is currently just run on the login node (i.e. not submitted to the job queue).
+
+
 
 
 ### Step 2: Generate swarm directory structure
