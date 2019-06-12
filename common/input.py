@@ -63,7 +63,7 @@ platform = Platform.getPlatformByName('CUDA')
 platformProperties = {'DeviceIndex': '0', 'Precision': 'mixed'}
 dcdReporter = DCDReporter(dcd_name, 20000)
 
-dataReporter = StateDataReporter(log_name, 2000, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
+dataReporter = StateDataReporter(log_name, 20000, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
 
 # Prepare the Simulation
 
