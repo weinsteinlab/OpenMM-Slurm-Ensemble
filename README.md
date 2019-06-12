@@ -102,6 +102,31 @@ After you have created the account and agreed to the license, download the link 
 
 ### Python Libraries
 
+Note: if you already have a conda environement activated, make sure to deactivate it before proceeding.
+```
+conda deactivate
+```
+
+First, create a conda environement for tICA's python dependencies:
+
+Note: if you already have a conda environement activated, make sure to deactivate it before proceeding.
+```
+conda create -n tica_env python=3.7.3
+```
+
+Next, activate this environment:
+```
+conda activate tica_env
+```
+
+Once activated, let's install the needed packages and python libraries:
+```
+conda install numpy matplotlib tqdm h5py scikit-learn
+```
+
+That's it--if everything went correctly, all dependencies needed for this workflow should now be installed!
+
+
 # Nomenclature
 
 # Job-specific files
