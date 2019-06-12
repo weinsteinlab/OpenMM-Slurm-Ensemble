@@ -3,9 +3,7 @@
   * [OpenMM](#openmm)
   * [VMD](#vmd)
   * [Python Libraries](#python-libraries)
-- [Nomenclature](#nomenclature)
-
-- [Job-specific files](#job-specific-files)
+- [Pre-workflow setup](#pre-workflow-setup)
   * [./common](#common)
   * [./tcls](#tcls)
 - [Workflow](#workflow)
@@ -126,20 +124,17 @@ conda install numpy matplotlib tqdm h5py scikit-learn
 
 That's it--if everything went correctly, all dependencies needed for this workflow should now be installed!
 
-
-# Nomenclature
-
-# Job-specific files
-#### ./common
-#### ./tcls
+# Pre-workflow setup
+### ./common
+### ./tcls
 
 # Workflow
 
-#### Step 1: Initial structures
-#### Step 2: Generate swarm directory structure
-#### Step 3: Launching a swarm
-#### Step 4: Concatenate swarm subjobs
-#### Step 5: Calculate tICA parameters
-#### Step 6: Calculate tICA projection and select frames for next swarm
-#### Step 7: Repeat prior steps!
+### Step 1: Initial structures
+### Step 2: Generate swarm directory structure
+### Step 3: Launching a swarm
+### Step 4: Concatenate swarm subjobs
+### Step 5: Calculate tICA parameters
+### Step 6: Calculate tICA projection and select frames for next swarm
+### Step 7: Repeat steps 2-6!
 ---
