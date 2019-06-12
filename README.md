@@ -225,7 +225,7 @@ These directories will hold all of the files related to running a given swarm's 
 
 ### Step 3: Launching a swarm
 
-To run all of the trajectories that make up the MD swarm, open ```launch_swarm.sh``` in vim, and edit the following variables:
+To run all of the trajectories that make up the MD swarm, open `launch_swarm.sh` in vim, and edit the following variables:
 
 ```
 swarm_number=0
@@ -241,16 +241,50 @@ The next 2 variables have to deal with trajectory subjobs. Because Summit has a 
 `first_subjob`: is the number of the first subjob, zero indexed. It should be zero, unless a swarm run crashes and needs to be restarted from a given subjob.
 `last_subjob`: this is `n - number_of_subjobs_you_wish_to_run`
 
-After editing this file, submit the MD swarm to the job scheduler with the following command:
+After editing this file, open `submit_swarm_subjobs.sh` in vim, and edit the following variables:
+
+```
+#BSUB -P BIP180                 # project name
+#BSUB -J openMM_test_ensemble   # job name
+```
+The first variable refers to the ORNL project name that these calculations will be charged to, and the second variable is just the name of the job that will be displayed in the job scheduler.
+
+Finally, submit the MD swarm to the job scheduler with the following command:
 
 ```
 ./.launch_swarm.sh
 ```
 
+This command submits subjob # `first_subjob` to run first (for all of the trajectories within this swarm), with subsequent subjobs dependent on the successful completetion of prior subjobs runs. 
 
+The status of the MD swarm can be checked with the following command:
 
+```
+bjobs
+```
+
+---
 
 ### Step 4: Concatenate swarm subjobs
+
+Once the above MD swarm has completed, you'll need to concatenate the `.dcd` files for each trajectory in the MD swarm, and place these concatenated trajectory files in a location known to subsequent scripts.
+
+Open `launch_concatenate_subjobs.sh` in vim, and edit the following variables:
+```
+#BSUB -P BIP180  
+#BSUB -J test_concatenate_subjobs
+swarm_number=0
+number_of_trajs_per_swarm=18
+catdcd="/gpfs/alpine/proj-shared/bip180/vmd/vmd_library/plugins/OPENPOWER/bin/catdcd5.1/catdcd"
+structure_file='dat_phase2b4.coor' # must be in ./common
+
+```
+The 2 `BSUB` settings were described in the previous step. 
+
+
+
+
+
 ### Step 5: Calculate tICA parameters
 ### Step 6: Calculate tICA projection and select frames for next swarm
 ### Step 7: Repeat steps 2-6!
