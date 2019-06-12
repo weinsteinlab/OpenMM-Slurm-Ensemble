@@ -306,31 +306,49 @@ These `.trr` files are used by subsequent analysis scripts.
 
 ### Step 5: Calculate tICA parameters
 
-The next step is to measure the previously described CVs, and use these measurements to calculate tICA parameters. First, open `launch_calculate_tica_parameters.sh` in vim and edit the following:
+The next step is to measure the previously described CVs, for each of the swarm's trajectories, and use these measurements to calculate tICA parameters. First, open `launch_calculate_tica_parameters.sh` in vim and edit the following:
 ```
 #BSUB -P BIP180
 #BSUB -J test_calculate_tica_parameters
 ```
 These `BSUB` options were described in earlier steps.
 
-Next, open `calculate_tica_parameters.py`
+Next, open `calculate_tica_parameters.py` in vim and edit the following:
+```
+vmd_path = "/gpfs/alpine/proj-shared/bip180/vmd/vmd_bin/vmd"
+psf_path = "./common/ionized.psf"
+pdb_path = "./common/hdat_3_1_restart_coor.pdb"
+```
+`vmd_path` is the path to your VMD executable (will depend on where you have installed VMD)
+`psf_path` and `pdb_path` are the initial pdb and psf found in `./common`
 
+Also edit the following:
+```
+tica_lag_time = 5           # 5 steps
+n_clusters = 18             # number of clusters for tICA landscape
+n_sel_clusters = 6          # number of low-populated clusters that frames for new swarms will be taken from
+n_sel_frames = 3            # number of frames to extract from each `n_sel_clusters`
+total_n_of_swarms = 1       # total number of swarms run
+```
 
+**Note:** if just running the template system found in this repository, no need to change the above values. 
 
+**Note:** `n_sel_cluster` * `n_sel_frames` must equal `number_of_trajs_per_swarm`
 
+To run the CV and tICA parmeter calcultion, run this command:
+```
+bsub launch_calculate_tica_parameters.sh
 
+```
+Analysis results will be placed in the directory `./analysis`, and will be used in subsequent calculations.
 
-
-
-
-
-
-
-
-
-
+---
 
 ### Step 6: Calculate tICA projection and select frames for next swarm
+
+The last unique step of this workflow is to project the trajectories onto the tICA space and to select trajectory frames that will act as the new intial conformations for the next MD swarm. **Note:** this trajectory frame selection, from poorly sampled regions of the tICA space, is how this work flow facilitates adaptive sampling.
+
+
 
 ### Step 7: Repeat steps 2-6!
 
