@@ -300,16 +300,38 @@ Inside `swarms_concatenated_temp/`, you'll find `./0000` ([0-9][0-9][0-9][0-9] d
 *  ...
 *  n.trr # where n = number_of_trajs_per_swarm - 1, zero padded to a width of 4
 
+These `.trr` files are used by subsequent analysis scripts.
 
-
-
-
-
-
-
-
+---
 
 ### Step 5: Calculate tICA parameters
+
+The next step is to measure the previously described CVs, and use these measurements to calculate tICA parameters. First, open `launch_calculate_tica_parameters.sh` in vim and edit the following:
+```
+#BSUB -P BIP180
+#BSUB -J test_calculate_tica_parameters
+```
+These `BSUB` options were described in earlier steps.
+
+Next, open `calculate_tica_parameters.py`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Step 6: Calculate tICA projection and select frames for next swarm
+
 ### Step 7: Repeat steps 2-6!
+
 ---
