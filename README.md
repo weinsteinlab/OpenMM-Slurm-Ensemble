@@ -143,6 +143,8 @@ Once this is done, go into this directory:
 cd my_adaptive_sampling_run # or whatever the directory is named at this point
 ```
 
+**Note: directory is hereafter referred to as the parent directory**
+
 **Note: you can skip the rest of this section and go to [Workflow](#workflow) if you are just running the test system found in this repository.**
 
 
@@ -207,10 +209,24 @@ After editing this file, generate the inital structures directory with the follo
 ./setup_individual_swarm.sh
 ```
 
+**Note:** this step is so lightweight that it is currently just run on the login node (i.e. not submitted to the job queue).
 
+This will create the directory `raw_swarms` in your repository's parent directory. In `./raw_swarms`, you'll see the directory `swarm[0-9][0-9][0-9][0-9]`, with the specific number depending on what you set `swarm_number` equal to.
+
+Inside of `swarm[0-9][0-9][0-9][0-9]`, you'll find:
+*  swarm0000_traj0000/
+*  swarm0000_traj0001/
+*  ...
+*  swarm0000_traj[n] # where n is `number_of_trajs_per_swarm` zero padded to a width of 4.
+
+These directories will hold all of the files related to running a given swarm's trajectory. 
 
 
 ### Step 3: Launching a swarm
+
+
+
+
 ### Step 4: Concatenate swarm subjobs
 ### Step 5: Calculate tICA parameters
 ### Step 6: Calculate tICA projection and select frames for next swarm
