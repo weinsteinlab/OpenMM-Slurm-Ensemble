@@ -143,6 +143,9 @@ Once this is done, go into this directory:
 cd my_adaptive_sampling_run # or whatever the directory is named at this point
 ```
 
+**Note:** you can skip the rest of this section and go to [Workflow](#workflow) if you are just running the test system found in this repository.
+
+
 Next, you'll need to populate/edit files in 2 directories: ./common & ./tcls
 
 ### ./common
