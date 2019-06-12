@@ -128,7 +128,7 @@ That's it--if everything went correctly, all dependencies needed for this workfl
 
 **Note:** you can skip the pre-workflow setup if you are just running the test system found in this repository.
 
-The first step in using these tools is to first clone a copy of this respository, in a directory that is appropiate for running swarms of MD simulations.
+The first step in using these tools is to first clone a copy of this respository, in a directory that is appropiate for running swarms of MD simulations ('swarm' is defined in the [this section](#step-1-initial-structures)).
 ```
 cd wherever_you_wish_to_run
 git clone git@scu-git.med.cornell.edu:des2037/adaptive-sampling-workflow-tools-for-summit.git
