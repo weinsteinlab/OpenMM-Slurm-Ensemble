@@ -186,11 +186,10 @@ After editing this file, generate the inital structures directory with the follo
 ```
 
 **Note:** this step is so lightweight that it is currently just run on the login node (i.e. not submitted to the job queue).
-
-
-
-
+---
 ### Step 2: Generate swarm directory structure
+
+
 ### Step 3: Launching a swarm
 ### Step 4: Concatenate swarm subjobs
 ### Step 5: Calculate tICA parameters
