@@ -144,7 +144,8 @@ Next, you'll need to populate/edit files in 2 directories: ./common & ./tcls
 
 ### ./common
 This directory must contain all of the simulation system-specific files needed to simulate your system with openMM:
-*  ionized.pdb 
+*  ionized.psf: this protein structure file possesses model structural information (bond connectivity, etc.). Currently, this file MUST be named ionized.psf (this restriction will be removed in future modificaions).
+*  
 
 
 ### ./tcls
