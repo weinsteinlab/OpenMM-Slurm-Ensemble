@@ -187,8 +187,27 @@ After editing this file, generate the inital structures directory with the follo
 
 **Note:** this step is so lightweight that it is currently just run on the login node (i.e. not submitted to the job queue).
 
+**Note:** this step is only done once for the entire workflow.
+
 ---
 ### Step 2: Generate swarm directory structure
+The next step is to generate the directory structure for a given swarm, and all of the subdirectories for the independent trajectories that make up this swarm. 
+Open ```setup_individual_swarm.sh``` in vim, and edit the following variables:
+
+```
+swarm_number=0
+number_of_trajs_per_swarm=18
+```
+
+`swarm_number=0` is the swarm number you wish to run; it is zero indexed.
+`number_of_trajs_per_swarm=18` is the number of MD trajectories per MD swarm.
+
+After editing this file, generate the inital structures directory with the following command:
+```
+./setup_individual_swarm.sh
+```
+
+
 
 
 ### Step 3: Launching a swarm
