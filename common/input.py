@@ -71,7 +71,7 @@ print('Building system...')
 topology = psf.topology
 positions = pdb.positions
 system = psf.createSystem(params, nonbondedMethod=PME, nonbondedCutoff=nonbondedCutoff, constraints=constraints, rigidWater=rigidWater, ewaldErrorTolerance=ewaldErrorTolerance, switchDistance=switchDistance, hydrogenMass=4*amu)
-system.addForce(MonteCarloMembraneBarostat(1.01325*bar, 200*bar*nanometer, 310*kelvin, MonteCarloMembraneBarostat.XYIsotropic, MonteCarloMembraneBarostat.ZFree))
+system.addForce(MonteCarloMembraneBarostat(1.01325*bar, 0*bar*nanometer, 310*kelvin, MonteCarloMembraneBarostat.XYIsotropic, MonteCarloMembraneBarostat.ZFree))
 
 integrator = LangevinIntegrator(temperature, friction, dt)
 integrator.setConstraintTolerance(constraintTolerance)
