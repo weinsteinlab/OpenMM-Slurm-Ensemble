@@ -13,7 +13,7 @@
   * [Step 4: Concatenate swarm subjobs](#step-4-concatenate-swarm-subjobs)
   * [Step 5: Calculate tICA parameters](#step-5-calculate-tica-parameters)
   * [Step 6: Calculate tICA projection and select frames for next swarm](step-6-calculate-tica-projection-and-select-frames-for-next-swarm)
-  * [Step 7: Repeat prior steps!](#step-7-repeat-prior-steps)
+  * [Step 7: Repeat steps 2-6!!](#step-7-repeat-steps-2-6)
 <!-- toc -->
 ---
 # Install Dependencies
