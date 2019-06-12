@@ -377,21 +377,27 @@ To perform this calculation, run the following command:
 bsub launch_tica_and_frame_selection.sh
 ```
 
+This will create additional results file in `./analysis`, as well as create a new directory `./selected_frames`. Inside of selected frames, you'll find: `sel_frames_swarm_0000`. 
 
+In this directory, you'll find `number_of_trajs_per_swarm` number of pdb files:
 
+*  0000_swarm0000_trajXXXX_frameYYYY.pdb
+*  0001_swarm0000_trajXXXX_frameYYYY.pdb
+*  ...
+*  n_swarm0000_trajXXXX_frameYYYY.pdb
 
+Where:
 
+*  `n` is `number_of_trajs_per_swarm` - 1, zero padded to a width of 4. 
+*  `XXXX` is the zero-padded trajectory # where the pdb conformation was found
+*  `YYYY` is the zero-padded is the frame number in the above trajectory where the pdb conformation was found. 
 
+These pdb files will be the initial conformations for the trajectories in the next MD swarm. **Note:** using these `selected` frames is the code's default behavoir for any swarm number > 0.
 
-
-
+---
 
 ### Step 7: Repeat steps 2-6!
 
-
-
-
-
-
+To start the next MD swarm, simply go back to [Step 2](#step-2-generate-swarm-directory-structure) and increment the swarm number (in this example case, the next swarm number is 1).
 
 ---
