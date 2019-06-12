@@ -105,7 +105,7 @@ After you have created the account and agreed to the license, download the link 
 conda deactivate
 ```
 
-First, create a conda environment  for tICA's python dependencies:
+First, create a conda environment for tICA's python dependencies:
 
 **Note:** if you already have a conda environment activated, make sure to deactivate it before proceeding.
 ```
@@ -349,7 +349,7 @@ Analysis results will be placed in the directory `./analysis`, and will be used 
 
 ### Step 6: Calculate tICA projection and select frames for next swarm
 
-The last unique step of this workflow is to project the trajectories onto the tICA space and to select trajectory frames that will act as the new intial conformations for the next MD swarm. **Note:** this trajectory frame selection, from poorly sampled regions of the tICA space, is how this work flow facilitates adaptive sampling.
+The last unique step of this workflow is to project the trajectories onto the tICA space and to select trajectory frames that will act as the new initial conformations for the next MD swarm. **Note:** this trajectory frame selection, from poorly sampled regions of the tICA space, is how this work flow facilitates adaptive sampling.
 
 First, open `launch_tica_and_frame_selection.sh` in vim and edit the following:
 ```
