@@ -38,6 +38,7 @@ do
   cp ./common/*.py $traj_path/.
   cp ./common/*.prm $traj_path/.
   cp ./common/*.sh $traj_path/.
+  cp ./common/*.xsc $traj_path/.
 
   # each node has 6 GPUs, so the following modulo makes sure each traj is assigned
   # is assigned a GPU # in the range 0-5.

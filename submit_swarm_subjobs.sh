@@ -1,7 +1,7 @@
 #!/bin/bash
 ## Begin LSF Directives
 #BSUB -P BIP180			# project name
-#BSUB -W 0:15			# hours:minutes, with 2 hour maximum
+#BSUB -W 2:00			# hours:minutes, with 2 hour maximum
 #BSUB -nnodes 3 		# this should equal: number_of_trajs_per_swarm/6 
 #BSUB -J openMM_test_ensemble   # job name
 #BSUB -alloc_flags gpumps
