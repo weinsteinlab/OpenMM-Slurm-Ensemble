@@ -169,7 +169,16 @@ This directory contains all of the tcl scripts, run by VMD, to measure pre-defin
 # Workflow
 
 ### Step 1: Initial structures
-This first step of this workflow is to create a directory with many copies of the initial pdb. This directory is used in later steps in constructing swarms of MD simulations ('swarms' is defined in the next step). **Note:** duplicating the initial structure is obviously inefficient, but not particularily expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
+This first step of this workflow is to create a directory with many copies of the initial pdb. This directory is used in later steps in constructing swarms of MD simulations. A **swarm** is simply a set of independently run MD simulations that may or may not have a common starting conformation. **Note:** duplicating the initial structure is obviously inefficient, but not particularily expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
+
+To create this directory, open ```populate_initial_structures.sh``` in vim, and edit the following variables:
+```
+number_of_trajs_per_swarm=18
+structure_file='dat_phase2b4.coor' # must be in ./common
+```
+
+```number_of_trajs_per_swarm``` is the number of trajectories 
+
 
 ### Step 2: Generate swarm directory structure
 ### Step 3: Launching a swarm
