@@ -125,6 +125,11 @@ conda install numpy matplotlib tqdm h5py scikit-learn
 That's it--if everything went correctly, all dependencies needed for this workflow should now be installed!
 
 # Pre-workflow setup
+The first step in using these tools is to first clone a copy of this respository, in a directory that is appropiate for running swarms of MD simulations.
+```
+cd wherever_you_wish_to_run
+git clone 
+
 ### ./common
 ### ./tcls
 
