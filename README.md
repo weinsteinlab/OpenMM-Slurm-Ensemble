@@ -176,11 +176,11 @@ This first step of this workflow is to create a directory with many copies of th
 To create this directory, open ```populate_initial_structures.sh``` in vim, and edit the following variables:
 ```
 number_of_trajs_per_swarm=18
-structure_file='dat_phase2b4.coor' # must be in ./common
+structure_file='hdat_3_1_restart_coor.pdb' # must be in ./common
 ```
 
 `number_of_trajs_per_swarm` is the number of MD simulations (hereafter trajectories) per MD swarm.
-`structure_file='dat_phase2b4.coor'` is the name of the initial structure (must be `.pdb` or `.coor`, and can't be a binary file). No path is given because this file is assumed to be in `./common` and is enclosed in single quotes.
+`structure_file='hdat_3_1_restart_coor.pdb'` is the name of the initial structure (must be `.pdb` or `.coor`, and can't be a binary file). No path is given because this file is assumed to be in `./common` and is enclosed in single quotes.
 
 After editing this file, generate the inital structures directory with the following command:
 ```
@@ -276,10 +276,10 @@ Open `launch_concatenate_subjobs.sh` in vim, and edit the following variables:
 swarm_number=0
 number_of_trajs_per_swarm=18
 catdcd="/gpfs/alpine/proj-shared/bip180/vmd/vmd_library/plugins/OPENPOWER/bin/catdcd5.1/catdcd"
-structure_file='dat_phase2b4.coor' # must be in ./common
+structure_file='hdat_3_1_restart_coor.pdb' # must be in ./common
 
 ```
-The 2 `BSUB` settings were described in the previous step. 
+The 2 `BSUB` settings were described in the previous step. Again `swarm_number`
 
 
 
