@@ -279,7 +279,16 @@ catdcd="/gpfs/alpine/proj-shared/bip180/vmd/vmd_library/plugins/OPENPOWER/bin/ca
 structure_file='hdat_3_1_restart_coor.pdb' # must be in ./common
 
 ```
-The 2 `BSUB` settings were described in the previous step. Again `swarm_number`
+The 2 `BSUB` settings were described in the previous step. 
+`swarm_number` is the swarm # for which you wish to concatenate each trajectories dcds. 
+`structure_file` is the name of the initial structure found in `./common`).
+
+`catdcd` is the path to the catdcd exectuable, found in the VMD installation directories (see the default value above for a hint to where you will find it--the specific path will depend on where you installed VMD).
+
+
+
+
+
 
 
 
