@@ -36,14 +36,14 @@ chmod 755 ./Miniconda3-latest-Linux-ppc64le.sh
 # follow instructions from installer
 ```
 
-Once Miniconda is installed, you'll need to create a conda environement for openMM:
+Once Miniconda is installed, you'll need to create a conda environment for openMM:
 ```
 conda create -n openmm740_cuda101 python=3.7.3
 ```
 
 (the following instructions are adapted from [Installing OpenMM on Summit](https://github.com/inspiremd/conda-recipes-summit))
 
-Activate this environement:
+Activate this environment:
 ```
 conda activate openmm740_cuda101
 ```
