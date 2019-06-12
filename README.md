@@ -169,6 +169,8 @@ This directory contains all of the tcl scripts, run by VMD, to measure pre-defin
 # Workflow
 
 ### Step 1: Initial structures
+This first step of this workflow is to create a directory with many copies of the initial pdb. This directory is used in later steps in constructing swarms of MD simulations ('swarms' is defined in the next step). **Note:** duplicating the initial structure is obviously inefficient, but not particularily expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
+
 ### Step 2: Generate swarm directory structure
 ### Step 3: Launching a swarm
 ### Step 4: Concatenate swarm subjobs
