@@ -221,9 +221,20 @@ Inside of `swarm[0-9][0-9][0-9][0-9]`, you'll find:
 
 These directories will hold all of the files related to running a given swarm's trajectory. 
 
+---
 
 ### Step 3: Launching a swarm
 
+To run all of the trajectories that make up the MD swarm, open ```launch_swarm.sh``` in vim, and edit the following variables:
+
+```
+swarm_number=0
+number_of_trajs_per_swarm=18
+first_subjob=0
+last_subjob=3
+```
+
+The first 2 variables have already been described and must be consistent with whatever was set in 
 
 
 
