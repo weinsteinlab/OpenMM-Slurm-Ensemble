@@ -143,7 +143,7 @@ Once this is done, go into this directory:
 cd my_adaptive_sampling_run # or whatever the directory is named at this point
 ```
 
-**Note:** you can skip the rest of this section and go to [Workflow](#workflow) if you are just running the test system found in this repository.
+**Note: you can skip the rest of this section and go to [Workflow](#workflow) if you are just running the test system found in this repository.**
 
 
 Next, you'll need to populate/edit files in 2 directories: ./common & ./tcls
@@ -159,6 +159,7 @@ This directory must contain all of the simulation system-specific files needed t
     * steps = 100000: the number of simulation steps per simulation subjob (subjobs are described later), but basically this should be the number of steps that can be run in 2 hours or less.
     * dcdReporter = DCDReporter(dcd_name, 20000): here the last number indicates how often the coordinates are written to the .dcd file; in this example, it's every 20,000 steps.
 *  **gpu_[0-5].erf**: these template explicit resource files are used by the code in this repository to assign specific node and GPU resources to individual jobs. No need to edit these files.
+*  **run_python.sh**: this script is used by other scripts in this workflow. No need to edit.
 
 ### ./tcls
 This directory contains all of the tcl scripts, run by VMD, to measure pre-defined collective variables (CVs) for the accumulated trajectories. Currently, these tcls scripts/related CVs are very hard-coded. This will hopefully be generalized in upcoming repository updates.
