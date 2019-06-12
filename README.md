@@ -340,6 +340,9 @@ To run the CV and tICA parmeter calcultion, run this command:
 bsub launch_calculate_tica_parameters.sh
 
 ```
+
+**Note:** the above job submission performs this calculation for EACH of the MD swarm's trajectories. It does this sequentally (one trajectory after another); this will likely be parallelized in future updates. 
+
 Analysis results will be placed in the directory `./analysis`, and will be used in subsequent calculations.
 
 ---
@@ -348,8 +351,47 @@ Analysis results will be placed in the directory `./analysis`, and will be used 
 
 The last unique step of this workflow is to project the trajectories onto the tICA space and to select trajectory frames that will act as the new intial conformations for the next MD swarm. **Note:** this trajectory frame selection, from poorly sampled regions of the tICA space, is how this work flow facilitates adaptive sampling.
 
+First, open `launch_tica_and_frame_selection.sh` in vim and edit the following:
+```
+#BSUB -P BIP180 
+#BSUB -J test_tica_and_frame_selection
+```
+These `BSUB` options were described in earlier steps.
+
+Next, open `tica_and_frame_selection.py` in vim and edit the following:
+```
+vmd_path = "/gpfs/alpine/proj-shared/bip180/vmd/vmd_bin/vmd"
+psf_path = "./common/ionized.psf"
+pdb_path = "./common/hdat_3_1_restart_coor.pdb"
+tica_lag_time = 5                       # 5 steps
+n_clusters = 18                         # number of clusters for tICA landscape
+n_sel_clusters = 6                      # number of low-populated clusters that frames for new swarms will be taken from
+n_sel_frames = 3                        # number of frames to extract from each `n_sel_clusters`
+n_traj_in_each_swarm = n_sel_clusters * n_sel_frames
+total_n_of_swarms = 0
+```
+All of these variables must be identical to what you set in `calculate_tica_parameters.py`.
+
+To perform this calculation, run the following command:
+```
+bsub launch_tica_and_frame_selection.sh
+```
+
+
+
+
+
+
+
+
 
 
 ### Step 7: Repeat steps 2-6!
+
+
+
+
+
+
 
 ---
