@@ -16,12 +16,12 @@ NOTES:
 #-------------------input parameters ----------------------------------------
 vmd_path = "/gpfs/alpine/proj-shared/bip180/vmd/vmd_bin/vmd"
 psf_path = "./common/ionized.psf"
-pdb_path = "./common/ionized.pdb"
+pdb_path = "./common/hdat_3_1_restart_coor.pdb"
 tica_lag_time = 5			# 5 steps
 n_clusters = 18				# number of clusters for tICA landscape
 n_sel_clusters = 6			# number of low-populated clusters that frames for new swarms will be taken from
 n_sel_frames = 3			# number of frames to extract from each `n_sel_clusters`
-total_n_of_swarms = 2                   # total number of swarms run
+total_n_of_swarms = 1                   # total number of swarms run
 
 # do not edit below this line
 
