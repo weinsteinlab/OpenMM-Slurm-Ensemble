@@ -128,11 +128,25 @@ That's it--if everything went correctly, all dependencies needed for this workfl
 The first step in using these tools is to first clone a copy of this respository, in a directory that is appropiate for running swarms of MD simulations.
 ```
 cd wherever_you_wish_to_run
-git clone https://scu-git.med.cornell.edu/git/des2037/adaptive-sampling-workflow-tools-for-summit.git
+git clone git@scu-git.med.cornell.edu:des2037/adaptive-sampling-workflow-tools-for-summit.git
 ```
 
+Optionally, you can rename the cloned repository to something meaningful for your calculations
+```
+mv adaptive-sampling-workflow-tools-for-summit my_adaptive_sampling_run
+```
+Once this is done, go into this directory:
+```
+cd my_adaptive_sampling_run # or whatever the directory is named at this point
+```
+
+Next, you'll need to populate/edit files in 2 directories: ./common & ./tcls
 
 ### ./common
+This directory must contain all of the simulation system-specific files needed to simulate your system with openMM:
+*  ionized.pdb 
+
+
 ### ./tcls
 
 # Workflow
