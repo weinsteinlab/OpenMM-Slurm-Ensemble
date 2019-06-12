@@ -1,8 +1,8 @@
 # Table of contents:
 - [Install Dependencies](#install-dependencies)
   * [OpenMM](#openmm)
-  * [Python Libraries](#python-libraries)
   * [VMD](#vmd)
+  * [Python Libraries](#python-libraries)
 - [Nomenclature](#nomenclature)
 
 - [Job-specific files](#job-specific-files)
@@ -28,7 +28,7 @@ This MD adaptive sampling workflow has several software dependencies:
 
 In this section, we describe how to install these dependencies on Summit. 
 
-#### OpenMM
+### OpenMM
 This procedure assumes you have installed miniConda on Summit in a directory that you own. For instructions on how to do this, please see:
 [Miniconda on Power9](https://docs.conda.io/en/latest/miniconda.html)
 
@@ -94,10 +94,13 @@ CUDA_VERSION="10.1" CUDA_SHORT_VERSION="101" conda build --numpy 1.15 --python 3
 conda install --yes --use-local openmm
 ```
 
+### VMD
+Installation of [VMD](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD) on Summit is trivial (however, you will have to create a free account).
+
+After you have created the account and agreed to the license, download the link to an appropiate directory that you own on Summit. Un-tar the VMD tarball, and follow the installation instructions found in the README file.
 
 
-#### Python Libraries
-#### VMD
+### Python Libraries
 
 # Nomenclature
 
