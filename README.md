@@ -95,19 +95,19 @@ conda install --yes --use-local openmm
 ### VMD
 Installation of [VMD](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD) on Summit is trivial (however, you will have to create a free account).
 
-After you have created the account and agreed to the license, download the link to an appropiate directory that you own on Summit. Un-tar the VMD tarball, and follow the installation instructions found in the README file.
+After you have created the account and agreed to the license, download the link to an appropriate directory that you own on Summit. Un-tar the VMD tarball, and follow the installation instructions found in the README file.
 
 
 ### Python Libraries
 
-**Note:** if you already have a conda environement activated, make sure to deactivate it before proceeding.
+**Note:** if you already have a conda environment  activated, make sure to deactivate it before proceeding.
 ```
 conda deactivate
 ```
 
-First, create a conda environement for tICA's python dependencies:
+First, create a conda environment  for tICA's python dependencies:
 
-**Note:** if you already have a conda environement activated, make sure to deactivate it before proceeding.
+**Note:** if you already have a conda environment activated, make sure to deactivate it before proceeding.
 ```
 conda create -n tica_env python=3.7.3
 ```
@@ -128,7 +128,7 @@ That's it--if everything went correctly, all dependencies needed for this workfl
 
 **Note:** you can skip the pre-workflow setup if you are just running the test system found in this repository.
 
-The first step in using these tools is to first clone a copy of this respository, in a directory that is appropiate for running swarms of MD simulations ('swarm' is defined in the [this section](#step-1-initial-structures)).
+The first step in using these tools is to first clone a copy of this repository, in a directory that is appropriate for running swarms of MD simulations ('swarm' is defined in the [this section](#step-1-initial-structures)).
 ```
 cd wherever_you_wish_to_run
 git clone git@scu-git.med.cornell.edu:des2037/adaptive-sampling-workflow-tools-for-summit.git
@@ -152,7 +152,7 @@ Next, you'll need to populate/edit files in 2 directories: ./common & ./tcls
 
 ### ./common
 This directory must contain all of the simulation system-specific files needed to simulate your system with openMM:
-*  **ionized.psf**: this protein structure file possesses model structural information (bond connectivity, etc.). Currently, this file **MUST** be named ionized.psf (this restriction will be removed in future modificaions).
+*  **ionized.psf**: this protein structure file possesses model structural information (bond connectivity, etc.). Currently, this file **MUST** be named ionized.psf (this restriction will be removed in future modifications).
 *  **hdat_3_1_restart_coor.pdb**: this protein data bank file contains the initial coordinates for your system. The file can be named anything, but must end in .pdb or .coor, and cannot be a binary file.
 *  **hdat_3_1_restart_coor.xsc**: this NAMD-generated extended system configuration file describes the system's periodic cell size for the .pdb described above. The file can be named anything, but must end in .xsc.
 *  **parameters_all36.prm**: this parameter file contains the CHARMM36 parameters needed to simulate your system. Currently, it **MUST** be named: parameters_all36.prm
@@ -160,7 +160,7 @@ This directory must contain all of the simulation system-specific files needed t
 *  **input.py**: this python script defines the openMM simulation; it **MUST** be named input.py. Here, the statistical ensemble is selected (e.g. NPT), temperature, and many, many other simulation parameters. The key ones to pay attention to are:
     * steps = 100000: the number of simulation steps per simulation subjob (subjobs are described later), but basically this should be the number of steps that can be run in 2 hours or less.
     * dcdReporter = DCDReporter(dcd_name, 20000): here the last number indicates how often the coordinates are written to the .dcd file; in this example, it's every 20,000 steps.
-    * dataReporter = StateDataReporter(log_name, 20000, ...: here, the 20000 indicates how frequenctly the log file is populated with simulation details, such as various energies and simulation progress.
+    * dataReporter = StateDataReporter(log_name, 20000, ...: here, the 20000 indicates how frequently the log file is populated with simulation details, such as various energies and simulation progress.
 *  **gpu_[0-5].erf**: these template explicit resource files are used by the code in this repository to assign specific node and GPU resources to individual jobs. No need to edit these files.
 *  **run_python.sh**: this script is used by other scripts in this workflow. No need to edit.
 
@@ -170,10 +170,10 @@ This directory contains all of the tcl scripts, run by VMD, to measure pre-defin
 
 # Adaptive Sampling Workflow
 
-The steps for the workflow described below must be currently manually run. This is intentional, so as not to complicate integration with other workflow applications. Futhermore, each step below has been designed to represent complete modules/pieces of the workflow, and should not be fractured without some discussion.
+The steps for the workflow described below must be currently manually run. This is intentional, so as not to complicate integration with other workflow applications. Furthermore, each step below has been designed to represent complete modules/pieces of the workflow, and should not be fractured without some discussion.
 
 ### Step 1: Initial structures
-This first step of this workflow is to create a directory with many copies of the initial pdb file. This directory is used in later steps in constructing swarms of MD simulations. A **swarm** is simply a set of independently run MD simulations that may or may not have a common starting conformation. **Note:** duplicating the initial structure is obviously inefficient, but not particularily expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
+This first step of this workflow is to create a directory with many copies of the initial pdb file. This directory is used in later steps in constructing swarms of MD simulations. A **swarm** is simply a set of independently run MD simulations that may or may not have a common starting conformation. **Note:** duplicating the initial structure is obviously inefficient, but not particularly expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
 
 To create this directory, open ```populate_initial_structures.sh``` in vim, and edit the following variables:
 ```
@@ -184,7 +184,7 @@ structure_file='hdat_3_1_restart_coor.pdb' # must be in ./common
 `number_of_trajs_per_swarm` is the number of MD simulations (hereafter trajectories) per MD swarm.
 `structure_file='hdat_3_1_restart_coor.pdb'` is the name of the initial structure (must be `.pdb` or `.coor`, and can't be a binary file). No path is given because this file is assumed to be in `./common` and is enclosed in single quotes.
 
-After editing this file, generate the inital structures directory with the following command:
+After editing this file, generate the initial structures directory with the following command:
 ```
 ./populate_initial_structures.sh
 ```
@@ -206,7 +206,7 @@ number_of_trajs_per_swarm=18
 `swarm_number=0` is the swarm number you wish to run; it is zero indexed.
 `number_of_trajs_per_swarm=18` is the number of MD trajectories per MD swarm.
 
-After editing this file, generate the inital structures directory with the following command:
+After editing this file, generate the initial structures directory with the following command:
 ```
 ./setup_individual_swarm.sh
 ```
@@ -257,7 +257,7 @@ Finally, submit the MD swarm to the job scheduler with the following command:
 ./.launch_swarm.sh
 ```
 
-This command submits subjob # `first_subjob` to run first (for all of the trajectories within this swarm), with subsequent subjobs dependent on the successful completetion of prior subjobs runs. 
+This command submits subjob # `first_subjob` to run first (for all of the trajectories within this swarm), with subsequent subjobs dependent on the successful completion of prior subjobs runs. 
 
 The status of the MD swarm can be checked with the following command:
 
@@ -285,7 +285,7 @@ The 2 `BSUB` settings were described in the previous step.
 `swarm_number` is the swarm # for which you wish to concatenate each trajectories dcds. 
 `structure_file` is the name of the initial structure found in `./common`).
 
-`catdcd` is the path to the catdcd exectuable, found in the VMD installation directories (see the default value above for a hint to where you will find it--the specific path will depend on where you installed VMD).
+`catdcd` is the path to the catdcd executable, found in the VMD installation directories (see the default value above for a hint to where you will find it--the specific path will depend on where you installed VMD).
 
 After editing this file, launch the concatenation job with the following command:
 ```
@@ -335,13 +335,13 @@ total_n_of_swarms = 1       # total number of swarms run
 
 **Note:** `n_sel_cluster` * `n_sel_frames` must equal `number_of_trajs_per_swarm`
 
-To run the CV and tICA parmeter calcultion, run this command:
+To run the CV and tICA parameter calculation, run this command:
 ```
 bsub launch_calculate_tica_parameters.sh
 
 ```
 
-**Note:** the above job submission performs this calculation for EACH of the MD swarm's trajectories. It does this sequentally (one trajectory after another); this will likely be parallelized in future updates. 
+**Note:** the above job submission performs this calculation for EACH of the MD swarm's trajectories. It does this sequentially (one trajectory after another); this will likely be parallelized in future updates. 
 
 Analysis results will be placed in the directory `./analysis`, and will be used in subsequent calculations.
 
@@ -392,7 +392,7 @@ Where:
 *  `XXXX` is the zero-padded trajectory # where the pdb conformation was found
 *  `YYYY` is the zero-padded is the frame number in the above trajectory where the pdb conformation was found. 
 
-These pdb files will be the initial conformations for the trajectories in the next MD swarm. **Note:** using these `selected` frames is the code's default behavoir for any swarm number > 0.
+These pdb files will be the initial conformations for the trajectories in the next MD swarm. **Note:** using these `selected` frames is the code's default behavior for any swarm number > 0.
 
 ---
 
