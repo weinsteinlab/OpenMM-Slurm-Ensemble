@@ -170,6 +170,8 @@ This directory contains all of the tcl scripts, run by VMD, to measure pre-defin
 
 # Workflow
 
+The steps for the workflow described below must be currently manually run. This is intentional, so as not to complicate integration with other workflow applications. Futhermore, each step below has been designed to represent complete modules/pieces of the workflow, and should not be fractured without some discussion.
+
 ### Step 1: Initial structures
 This first step of this workflow is to create a directory with many copies of the initial pdb file. This directory is used in later steps in constructing swarms of MD simulations. A **swarm** is simply a set of independently run MD simulations that may or may not have a common starting conformation. **Note:** duplicating the initial structure is obviously inefficient, but not particularily expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
 
@@ -279,13 +281,57 @@ catdcd="/gpfs/alpine/proj-shared/bip180/vmd/vmd_library/plugins/OPENPOWER/bin/ca
 structure_file='hdat_3_1_restart_coor.pdb' # must be in ./common
 
 ```
-The 2 `BSUB` settings were described in the previous step. Again `swarm_number`
+The 2 `BSUB` settings were described in the previous step. 
+`swarm_number` is the swarm # for which you wish to concatenate each trajectories dcds. 
+`structure_file` is the name of the initial structure found in `./common`).
 
+`catdcd` is the path to the catdcd exectuable, found in the VMD installation directories (see the default value above for a hint to where you will find it--the specific path will depend on where you installed VMD).
 
+After editing this file, launch the concatenation job with the following command:
+```
+./launch_concatenate_subjobs.sh
+```
 
+This submits the concatenation job to the job scheduler. This job will create the directory `swarms_concatenated_temp/` in your repository's parent directory. **Note: the directory is describecd as 'temp' because the trajectories in this directory are convenient duplicates of what is found in `./raw_swarms`. At some point, the directory `swarms_concatenated_temp/` should be deleted. (still considering in-house when this should occur)
 
+Inside `swarms_concatenated_temp/`, you'll find `./0000` ([0-9][0-9][0-9][0-9] depending on your swarm number). Inside of `./0000`, you'll find:
+*  0000.trr
+*  0001.trr
+*  ...
+*  n.trr # where n = number_of_trajs_per_swarm - 1, zero padded to a width of 4
+
+These `.trr` files are used by subsequent analysis scripts.
+
+---
 
 ### Step 5: Calculate tICA parameters
+
+The next step is to measure the previously described CVs, and use these measurements to calculate tICA parameters. First, open `launch_calculate_tica_parameters.sh` in vim and edit the following:
+```
+#BSUB -P BIP180
+#BSUB -J test_calculate_tica_parameters
+```
+These `BSUB` options were described in earlier steps.
+
+Next, open `calculate_tica_parameters.py`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Step 6: Calculate tICA projection and select frames for next swarm
+
 ### Step 7: Repeat steps 2-6!
+
 ---
