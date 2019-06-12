@@ -6,7 +6,7 @@
 - [Pre-workflow setup](#pre-workflow-setup)
   * [./common](#common)
   * [./tcls](#tcls)
-- [Workflow](#workflow)
+- [Adaptive Sampling Workflow](#adaptive-sampling-workflow)
   * [Step 1: Initial structures](#step-1-initial-structures)
   * [Step 2: Generate swarm directory structure](#step-2-generate-swarm-directory-structure)
   * [Step 3: Launching a swarm](#step-3-launching-a-swarm)
@@ -145,7 +145,7 @@ cd my_adaptive_sampling_run # or whatever the directory is named at this point
 
 **Note: directory is hereafter referred to as the parent directory**
 
-**Note: you can skip the rest of this section and go to [Workflow](#workflow) if you are just running the test system found in this repository.**
+**Note: you can skip the rest of this section and go to [Adaptive Sampling Workflow](#adaptive-sampling-workflow) if you are just running the test system found in this repository.**
 
 
 Next, you'll need to populate/edit files in 2 directories: ./common & ./tcls
@@ -168,7 +168,7 @@ This directory must contain all of the simulation system-specific files needed t
 This directory contains all of the tcl scripts, run by VMD, to measure pre-defined collective variables (CVs) for the accumulated trajectories. Currently, these tcls scripts/related CVs are very hard-coded. This will hopefully be generalized in upcoming repository updates.
 
 
-# Workflow
+# Adaptive Sampling Workflow
 
 The steps for the workflow described below must be currently manually run. This is intentional, so as not to complicate integration with other workflow applications. Futhermore, each step below has been designed to represent complete modules/pieces of the workflow, and should not be fractured without some discussion.
 
