@@ -7,7 +7,7 @@
   * [./common](#common)
   * [./tcls](#tcls)
 - [Workflow](#workflow)
-  * [Step 1: Initial structures](#initial-structures)
+  * [Step 1: Initial structures](#step-1-initial-structures)
   * [Step 2: Generate swarm directory structure](#step-2-generate-swarm-directory-structure)
   * [Step 3: Launching a swarm](#step-3-launching-a-swarm)
   * [Step 4: Concatenate swarm subjobs](#step-4-concatenate-swarm-subjobs)
