@@ -125,6 +125,9 @@ conda install numpy matplotlib tqdm h5py scikit-learn
 That's it--if everything went correctly, all dependencies needed for this workflow should now be installed!
 
 # Pre-workflow setup
+
+**Note:** you can skip the pre-workflow setup if you are just running the test system found in this repository.
+
 The first step in using these tools is to first clone a copy of this respository, in a directory that is appropiate for running swarms of MD simulations.
 ```
 cd wherever_you_wish_to_run
@@ -155,6 +158,7 @@ This directory must contain all of the simulation system-specific files needed t
 *  **gpu_[0-5].erf**: these template explicit resource files are used by the code in this repository to assign specific node and GPU resources to individual jobs. No need to edit these files.
 
 ### ./tcls
+This directory contains all of the tcl scripts, run by VMD, to measure pre-defined collective variables (CVs) for the accumulated trajectories. Currently, these tcls scripts/related CVs are very hard-coded. This will hopefully be generalized in upcoming repository updates.
 
 
 # Workflow
