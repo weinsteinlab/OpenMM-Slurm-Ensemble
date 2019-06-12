@@ -147,10 +147,11 @@ This directory must contain all of the simulation system-specific files needed t
 *  **ionized.psf**: this protein structure file possesses model structural information (bond connectivity, etc.). Currently, this file **MUST** be named ionized.psf (this restriction will be removed in future modificaions).
 *  **hdat_3_1_restart_coor.pdb**: this protein data bank file contains the initial coordinates for your system. The file can be named anything, but must end in .pdb or .coor, and cannot be a binary file.
 *  **hdat_3_1_restart_coor.xsc**: this NAMD-generated extended system configuration file describes the system's periodic cell size for the .pdb described above. The file can be named anything, but must end in .xsc.
-*  **parameters_all36.prm**: this parameter file contains the CHARMM36 parameters needed to simulate your system
-*  **all_top.rtf**: this file has a description of all the atom types, masses, and elements used by your system
-*  **input.py**: this python script defines the openMM simulation. Here, the statistical ensemble is selected (e.g. NPT), temperature, and many, many other simulation parameters. The key ones to pay attention to are:
-+ kj
+*  **parameters_all36.prm**: this parameter file contains the CHARMM36 parameters needed to simulate your system. Currently, it **MUST** be named: parameters_all36.prm
+*  **all_top.rtf**: this file has a description of all the atom types, masses, and elements used by your system. Currently, it **MUST** be named: all_top.rtf.
+*  **input.py**: this python script defines the openMM simulation; it **MUST** be named input.py. Here, the statistical ensemble is selected (e.g. NPT), temperature, and many, many other simulation parameters. The key ones to pay attention to are:
+    * steps = 100000: the number of simulation steps per simulation subjob (subjobs are described later), but basically this should be the number of steps that can be run in 2 hours or less.
+    * dcdReporter = DCDReporter(dcd_name, 20000): here the last number indicates how often the coordinates are written to the .dcd file; in this example, it's every 20,000 steps.
 
 
 ### ./tcls
