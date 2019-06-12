@@ -20,6 +20,14 @@
 ---
 # Install Dependencies
 
+This MD adaptive sampling workflow has several software dependencies: 
+
+*  openMM, 
+*  VMD,
+*  several python libraries
+
+In this section, we describe how to install these dependencies on Summit. 
+
 #### OpenMM
 This procedure assumes you have installed miniConda on Summit in a directory that you own. For instructions on how to do this, please see:
 [Miniconda on Power9](https://docs.conda.io/en/latest/miniconda.html)
