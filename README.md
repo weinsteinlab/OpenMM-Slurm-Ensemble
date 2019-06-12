@@ -158,6 +158,7 @@ This directory must contain all of the simulation system-specific files needed t
 *  **input.py**: this python script defines the openMM simulation; it **MUST** be named input.py. Here, the statistical ensemble is selected (e.g. NPT), temperature, and many, many other simulation parameters. The key ones to pay attention to are:
     * steps = 100000: the number of simulation steps per simulation subjob (subjobs are described later), but basically this should be the number of steps that can be run in 2 hours or less.
     * dcdReporter = DCDReporter(dcd_name, 20000): here the last number indicates how often the coordinates are written to the .dcd file; in this example, it's every 20,000 steps.
+    * dataReporter = StateDataReporter(log_name, 20000, ...: here, the 20000 indicates how frequenctly the log file is populated with simulation details, such as various energies and simulation progress.
 *  **gpu_[0-5].erf**: these template explicit resource files are used by the code in this repository to assign specific node and GPU resources to individual jobs. No need to edit these files.
 *  **run_python.sh**: this script is used by other scripts in this workflow. No need to edit.
 
