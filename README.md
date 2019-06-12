@@ -65,7 +65,7 @@ Next, install OpenMM:
 conda install --yes -c omnia-dev/label/cuda92 openmm
 ```
 
-Note: in the above, cuda92 is referenced, but we need to use cuda10.1.105. In order to do so, we need to rebuild several packages and openMM first. 
+**Note:** in the above, cuda92 is referenced, but we need to use cuda10.1.105. In order to do so, we need to rebuild several packages and openMM first. 
 
 Before rebuilding any packages, we'll first need to install a few more packages:
 ```
@@ -81,7 +81,7 @@ conda build --numpy 1.13.1 --python 3.6.3 parmed
 conda install --use-local parmed
 ```
 
-Note: in the above I reference python 3.6.3--this is because python gets downgraded due to dependency-python compatibility issues.
+**Note:** in the above I reference python 3.6.3--this is because python gets downgraded due to dependency-python compatibility issues.
 
 Finally, it's time to rebuild openMM:
 
@@ -100,14 +100,14 @@ After you have created the account and agreed to the license, download the link 
 
 ### Python Libraries
 
-Note: if you already have a conda environement activated, make sure to deactivate it before proceeding.
+**Note:** if you already have a conda environement activated, make sure to deactivate it before proceeding.
 ```
 conda deactivate
 ```
 
 First, create a conda environement for tICA's python dependencies:
 
-Note: if you already have a conda environement activated, make sure to deactivate it before proceeding.
+**Note:** if you already have a conda environement activated, make sure to deactivate it before proceeding.
 ```
 conda create -n tica_env python=3.7.3
 ```
@@ -144,7 +144,7 @@ Next, you'll need to populate/edit files in 2 directories: ./common & ./tcls
 
 ### ./common
 This directory must contain all of the simulation system-specific files needed to simulate your system with openMM:
-*  ionized.psf: this protein structure file possesses model structural information (bond connectivity, etc.). Currently, this file MUST be named ionized.psf (this restriction will be removed in future modificaions).
+*  **ionized.psf**: this protein structure file possesses model structural information (bond connectivity, etc.). Currently, this file **MUST** be named ionized.psf (this restriction will be removed in future modificaions).
 *  
 
 
