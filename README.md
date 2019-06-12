@@ -177,7 +177,8 @@ number_of_trajs_per_swarm=18
 structure_file='dat_phase2b4.coor' # must be in ./common
 ```
 
-```number_of_trajs_per_swarm``` is the number of trajectories 
+```number_of_trajs_per_swarm``` is the number of MD simulations (hereafter trajectories) per MD swarm.
+```structure_file='dat_phase2b4.coor'``` is the name of the initial structure (must be .pdb or .coor, and can't be a binary file). No path is given because this file is assumed to be in `./common` and is enclosed in single quotes.
 
 
 ### Step 2: Generate swarm directory structure
