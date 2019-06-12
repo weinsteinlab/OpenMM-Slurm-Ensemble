@@ -18,7 +18,7 @@
 ---
 # Install Dependencies
 
-This MD adaptive sampling workflow has several software dependencies: 
+This molecular dynamics (MD) adaptive sampling workflow has several software dependencies: 
 
 *  openMM, 
 *  VMD,
@@ -128,7 +128,9 @@ That's it--if everything went correctly, all dependencies needed for this workfl
 The first step in using these tools is to first clone a copy of this respository, in a directory that is appropiate for running swarms of MD simulations.
 ```
 cd wherever_you_wish_to_run
-git clone 
+git clone https://scu-git.med.cornell.edu/git/des2037/adaptive-sampling-workflow-tools-for-summit.git
+```
+
 
 ### ./common
 ### ./tcls
