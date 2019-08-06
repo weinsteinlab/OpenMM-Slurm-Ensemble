@@ -18,7 +18,7 @@ final_pdb_name="%s.pdb" %(base_name)
 mass_files = str(','.join(glob.glob('*.rtf')))
 parameter_files = str(','.join(glob.glob('*.prm')))
 
-# Input Files
+# Input Files--Don't edit this section!
 
 psf = CharmmPsfFile(str(''.join(glob.glob('*.psf'))))
 pdb = PDBFile(sorted(glob.glob('*.pdb'))[0])
@@ -26,13 +26,27 @@ params = CharmmParameterSet(mass_files, parameter_files)
 
 # Compute the box dimensions from the coordinates and set the box lengths (only
 # orthorhombic boxes are currently supported in OpenMM)
+# Don't edit this section!
 
-xsc_file_name = glob.glob('*.xsc')
-xsc_file = open(xsc_file_name[0], 'r')
+xsc_file_name = sorted(glob.glob('*.xsc'))[0]
+xsc_file = open(xsc_file_name, 'r')
 xsc_last_line = xsc_file.read().splitlines()[-1].split(' ')
 xsc_file.close()
 
+# Write list of input files to log file--Don't edit this section!
+setupLog = open('%s_setupLog.txt' % base_name, 'w')
+setupLog.write("These are the files that were read into this subjob.\n")
+setupLog.write("Note: if checkpoint file is read, values in some of these files will not used.\n\n")
+setupLog.write("psf file: %s\n" % str(''.join(glob.glob('*.psf'))))
+setupLog.write("pdb file: %s\n" % sorted(glob.glob('*.pdb'))[0])
+setupLog.write("xsc file: %s\n" % sorted(glob.glob('*.xsc'))[0])
+setupLog.write("Mass Files: %s\n" % mass_files)
+setupLog.write("Parameter Files: %s\n" % parameter_files)
+if int(subjob_number) > 0: setupLog.write("Checkpoint file used: TRUE")
+setupLog.close()
+
 # Divide by 10 because NAMD xsc is in angstroms, whereas nanometers is the default in openMM
+# Don't edit this section!
 x_PBC_vector_length = float(xsc_last_line[1])/10
 y_PBC_vector_length = float(xsc_last_line[5])/10
 z_PBC_vector_length = float(xsc_last_line[9])/10
