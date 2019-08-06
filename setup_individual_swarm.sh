@@ -40,7 +40,7 @@ do
   cp ./inputs/${directoryNumberPadded}/*.* $traj_path/.
   ((currentNumberOfReplicas--))
 
-  if [ $currentNumberOfReplicas -eq 0] 
+  if [ $currentNumberOfReplicas -eq 0 ] && [ $traj_number -lt $((number_of_trajs_per_swarm - 1)) ]  
   then
     ((directoryNumber++))
     directoryNumberPadded=`printf %04d $directoryNumber`
