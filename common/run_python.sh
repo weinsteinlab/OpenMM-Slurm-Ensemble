@@ -7,4 +7,4 @@ module load cuda/10.1.168
 source ~/.bashrc
 conda activate openmm_7.4_beta
 
-python input.py $1 & 
+python input.py $1 > python_run.log & 
