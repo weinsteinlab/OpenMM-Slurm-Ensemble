@@ -1,8 +1,9 @@
+
 # run readInputFiles.py
 exec(open("./readInputFiles.py").read())
 
-# System Configuration
 
+# System Configuration
 nonbondedMethod = PME
 nonbondedCutoff = 12*angstroms
 switchDistance=10*angstroms
@@ -12,24 +13,22 @@ constraints = AllBonds
 rigidWater = True
 constraintTolerance = 0.000001
 
-# Integration Options
 
+# Integration Options
 dt = 0.004*picoseconds
 temperature = 310*kelvin
 friction = 1.0/picosecond
 
-# Simulation Options
 
+# Simulation Options
 steps = 100000
 equilibrationSteps = 0
-platform = Platform.getPlatformByName('CUDA')
-platformProperties = {'DeviceIndex': '0', 'Precision': 'mixed'}
 dcdReporter = DCDReporter(dcd_name, 20000)
 
 dataReporter = StateDataReporter(log_name, 20000, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
 
-# Prepare the Simulation
 
+# Prepare the Simulation
 print('Building system...')
 topology = psf.topology
 positions = pdb.positions
@@ -41,12 +40,13 @@ integrator.setConstraintTolerance(constraintTolerance)
 simulation = Simulation(topology, system, integrator, platform, platformProperties)
 simulation.context.setPositions(positions)
 
-# Minimize and Equilibrate
 
+# Set velocity and loadCheckpoint if available
 simulation.context.setVelocitiesToTemperature(temperature)
 simulation.currentStep = 0
 
 if int(subjob_number) > 0: simulation.loadCheckpoint('checkpnt.chk')
+
 
 # Simulate
 print('Simulating...')

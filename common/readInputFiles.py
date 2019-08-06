@@ -42,6 +42,7 @@ xsc_file.close()
 now = datetime.datetime.now()
 dateAndTimeNow = now.strftime("%d/%m/%Y %H:%M:%S")
 
+
 # get openMM version info
 calculationVersion = Platform.getOpenMMVersion()
 calculationGit     = version.git_revision
@@ -70,3 +71,8 @@ y_PBC_vector_length = float(xsc_last_line[5])/10
 z_PBC_vector_length = float(xsc_last_line[9])/10
 
 psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
+
+
+# Infrastructure description
+platform = Platform.getPlatformByName('CUDA')
+platformProperties = {'DeviceIndex': '0', 'Precision': 'mixed'}

@@ -2,9 +2,9 @@
 
 module load xl
 module load fftw
-module load cuda/10.1.105
+module load cuda/10.1.168
 
 source ~/.bashrc
-source activate openmmCuda101
+source activate openmm_7.4_beta
 
-python input.py $1 $2 $3 $4 > ./python_log.txt & 
+python input.py $1 & 
