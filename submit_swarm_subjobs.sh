@@ -19,14 +19,6 @@ do
   traj_number_padded=`printf %04d $traj_number`
   traj_path=$swarm_path/swarm${swarm_number_padded}_traj$traj_number_padded
   
-  if [[ "$swarm_number" -eq 0 ]]; then
-    cp $CWD/initial_structures/${traj_number_padded}*.pdb $traj_path/.
-  else
-    prior_swarm_number="$(expr $swarm_number - 1)"
-    prior_swarm_number_padded=`printf %04d $prior_swarm_number`
-    cp $CWD/selected_frames/sel_frames_swarm_$prior_swarm_number_padded/${traj_number_padded}*.pdb $traj_path/.
-  fi
-
   erf_file=$(ls ${traj_path}/*.erf)
 
   cd $traj_path
