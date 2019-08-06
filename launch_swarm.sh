@@ -10,7 +10,7 @@
 # use: ./launch_swarm.sh
 
 swarm_number=0
-number_of_trajs_per_swarm=18
+number_of_trajs_per_swarm=24
 first_subjob=0
 last_subjob=3
 jobName="your job name"
