@@ -21,7 +21,7 @@ final_pdb_name="%s.pdb" %(base_name)
 
 psf = CharmmPsfFile('ionized.psf')
 pdb = PDBFile(starting_structure)
-params = CharmmParameterSet('all_top.rtf', 'parameters_all36.prm')
+params = CharmmParameterSet('all_masses.rtf', 'parameters_all36.prm')
 
 # Compute the box dimensions from the coordinates and set the box lengths (only
 # orthorhombic boxes are currently supported in OpenMM)
