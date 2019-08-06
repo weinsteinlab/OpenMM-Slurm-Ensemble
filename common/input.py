@@ -6,9 +6,10 @@ from simtk.unit import *
 from sys import stdout
 
 # command_line variables--Don't edit this section!
-swarm_number = sys.argv[1]
-traj_number = sys.argv[2]
-subjob_number = sys.argv[3]
+current_directory = os.path.basename(os.getcwd())
+swarm_number = current_directory.split('_')[0][-4:] 
+traj_number = current_directory.split('_')[1][-4:]
+subjob_number = sys.argv[1]
 
 base_name="./swarm%s_traj%s_subjob%s" %(str(swarm_number).zfill(4), str(traj_number).zfill(4),str(subjob_number).zfill(4))
 dcd_name="%s.dcd" %(base_name)

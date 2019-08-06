@@ -30,6 +30,6 @@ do
   erf_file=$(ls ${traj_path}/*.erf)
 
   cd $traj_path
-  jsrun --erf_input $erf_file ./run_python.sh $swarm_number $traj_number $subjob_number &
+  jsrun --erf_input $erf_file ./run_python.sh $subjob_number &
   cd $CWD
 done 
