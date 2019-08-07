@@ -1,7 +1,6 @@
 # Table of contents:
 - [Setup Environment](#setup-enviornment)
 - [Pre-workflow setup](#pre-workflow-setup)
-  * [./common](#common)
 - [OpenMM Ensemble Workflow](#openmm-ensemble-workflow)
   * [Step 1: Initial structures](#step-1-initial-structures)
   * [Step 2: Generate swarm directory structure](#step-2-generate-swarm-directory-structure)
@@ -54,7 +53,7 @@ That's it--if everything went correctly, all dependencies needed for this workfl
 The first step in using these tools is to first clone a copy of this repository, in a directory that is appropriate for running swarms of MD simulations ('swarm' is defined in the [this section](#step-1-initial-structures)).
 ```
 cd wherever_you_wish_to_run
-git clone git@scu-git.med.cornell.edu:des2037/adaptive-sampling-workflow-tools-for-summit.git
+git@scu-git.med.cornell.edu:des2037/summit-openmm-ensemble.git
 ```
 
 Optionally, you can rename the cloned repository to something meaningful for your calculations
@@ -71,63 +70,48 @@ cd my_adaptive_sampling_run # or whatever the directory is named at this point
 **Note: you can skip the rest of this section and go to [Adaptive Sampling Workflow](#adaptive-sampling-workflow) if you are just running the test system found in this repository.**
 
 
-Next, you'll need to populate/edit files in 2 directories: ./common & ./tcls
+Next, you'll need to populate/edit files in the directory `./inputs`
 
-### ./common
-This directory must contain all of the simulation system-specific files needed to simulate your system with openMM:
-*  **ionized.psf**: this protein structure file possesses model structural information (bond connectivity, etc.). Currently, this file **MUST** be named ionized.psf (this restriction will be removed in future modifications).
-*  **hdat_3_1_restart_coor.pdb**: this protein data bank file contains the initial coordinates for your system. The file can be named anything, but must end in .pdb or .coor, and cannot be a binary file.
+**Note:** You'll see there is another directory called `./common`: do **NOT** edit anything in this directory! It contains scripts that facilitate job management and should not be edited by the user.
+
+`./inputs` should contain a separate subdirectory for each unique system you wish to run. These subdirectories MUST have 4-zero-padded, zero-indexed names (e.g., `0000`, `0001`, `0002`, etc.). Deviating from this nomenclature WILL break the scripts.
+
+Each subdirectory must contain all of the simulation system-specific files needed to simulate your system with openMM:
+*  **ionized.psf**: this protein structure file possesses model structural information (bond connectivity, etc.). The file can be named anything, but must end in .psf, and cannot be a binary file.
+*  **hdat_3_1_restart_coor.pdb**: this protein data bank file contains the initial coordinates for your system. The file can be named anything, but must end in .pdb, and cannot be a binary file.
 *  **hdat_3_1_restart_coor.xsc**: this NAMD-generated extended system configuration file describes the system's periodic cell size for the .pdb described above. The file can be named anything, but must end in .xsc.
-*  **parameters_all36.prm**: this parameter file contains the CHARMM36 parameters needed to simulate your system. Currently, it **MUST** be named: parameters_all36.prm
-*  **all_top.rtf**: this file has a description of all the atom types, masses, and elements used by your system. Currently, it **MUST** be named: all_top.rtf.
+*  **parameters_all36.prm**: this parameter file contains the CHARMM36 parameters needed to simulate your system. Any number of parameters files can be used, and these file can be named anything, but they must end in .prm.
+*  **all_masses.rtf**: this file has a description of all the atom types, masses, and elements used by your system. Any number of mass files can be used, and these file can be named anything, but they must end in .rtf.
 *  **input.py**: this python script defines the openMM simulation; it **MUST** be named input.py. Here, the statistical ensemble is selected (e.g. NPT), temperature, and many, many other simulation parameters. The key ones to pay attention to are:
     * steps = 100000: the number of simulation steps per simulation subjob (subjobs are described later), but basically this should be the number of steps that can be run in 2 hours or less.
     * dcdReporter = DCDReporter(dcd_name, 20000): here the last number indicates how often the coordinates are written to the .dcd file; in this example, it's every 20,000 steps.
     * dataReporter = StateDataReporter(log_name, 20000, ...: here, the 20000 indicates how frequently the log file is populated with simulation details, such as various energies and simulation progress.
-*  **gpu_[0-5].erf**: these template explicit resource files are used by the code in this repository to assign specific node and GPU resources to individual jobs. No need to edit these files.
-*  **run_python.sh**: this script is used by other scripts in this workflow. No need to edit.
+*  **numberOfReplicas.txt**: this file contains to number of replicas to run for this system. MUST be a multiple of 6.
 
-### ./tcls
-This directory contains all of the tcl scripts, run by VMD, to measure pre-defined collective variables (CVs) for the accumulated trajectories. Currently, these tcls scripts/related CVs are very hard-coded. This will hopefully be generalized in upcoming repository updates.
+**Note:** make sure you have benchmarked each different system and have adjusted its individual `steps=` parameter accordingly. This workflow supports running an arbitrarily high number of systems (up to 9,999) with no restrictions on size differences. However, this functionality relies on adjusting each systems `steps=` to what can run in 2 hours. 
+
+**Note:** Until experienced with Summit's performance for a given set of systems, I recommend only requesting 80% of the number of steps that can be performed in 2 hours. This way, there is little risk of any of the systems running out of time, creating a mess to clean up.
+
+Finally, if you only have 1 system to run (with many replicas), just create 1 subdirectory in `inputs`.
 
 
-# Adaptive Sampling Workflow
+# OpenMM Ensemble Workflow
 
 The steps for the workflow described below must be currently manually run. This is intentional, so as not to complicate integration with other workflow applications. Furthermore, each step below has been designed to represent complete modules/pieces of the workflow, and should not be fractured without some discussion.
 
-### Step 1: Initial structures
-This first step of this workflow is to create a directory with many copies of the initial pdb file. This directory is used in later steps in constructing swarms of MD simulations. A **swarm** is simply a set of independently run MD simulations that may or may not have a common starting conformation. **Note:** duplicating the initial structure is obviously inefficient, but not particularly expensive as the file is small. Furthermore, this allows an MD swarm to be started from many different starting structures if desired.    
-
-To create this directory, open ```populate_initial_structures.sh``` in vim, and edit the following variables:
-```
-number_of_trajs_per_swarm=18
-structure_file='hdat_3_1_restart_coor.pdb' # must be in ./common
-```
-
-`number_of_trajs_per_swarm` is the number of MD simulations (hereafter trajectories) per MD swarm.
-`structure_file='hdat_3_1_restart_coor.pdb'` is the name of the initial structure (must be `.pdb` or `.coor`, and can't be a binary file). No path is given because this file is assumed to be in `./common` and is enclosed in single quotes.
-
-After editing this file, generate the initial structures directory with the following command:
-```
-./populate_initial_structures.sh
-```
-
-**Note:** this step is so lightweight that it is currently just run on the login node (i.e. not submitted to the job queue).
-
-**Note:** this step is only done once for the entire workflow.
 
 ---
-### Step 2: Generate swarm directory structure
-The next step is to generate the directory structure for a given swarm, and all of the subdirectories for the independent trajectories that make up this swarm. 
+### Step 1: Generate swarm directory structure
+After populating `./inputs` your  step is to generate the directory structure for a given swarm, and all of the subdirectories for the independent trajectories that make up this swarm. 
 Open ```setup_individual_swarm.sh``` in vim, and edit the following variables:
 
 ```
 swarm_number=0
-number_of_trajs_per_swarm=18
+number_of_trajs_per_swarm=24
 ```
 
 `swarm_number=0` is the swarm number you wish to run; it is zero indexed.
-`number_of_trajs_per_swarm=18` is the number of MD trajectories per MD swarm.
+`number_of_trajs_per_swarm=24` is the number of MD trajectories per MD swarm. MUST be a multiple of 6
 
 After editing this file, generate the initial structures directory with the following command:
 ```
@@ -154,7 +138,7 @@ To run all of the trajectories that make up the MD swarm, open `launch_swarm.sh`
 
 ```
 swarm_number=0
-number_of_trajs_per_swarm=18
+number_of_trajs_per_swarm=24 # MUST be a multiple of 6
 first_subjob=0
 last_subjob=3
 ```
@@ -165,14 +149,7 @@ The next 2 variables have to deal with trajectory subjobs. Because Summit has a 
 
 `first_subjob`: is the number of the first subjob, zero indexed. It should be zero, unless a swarm run crashes and needs to be restarted from a given subjob.
 `last_subjob`: this is `n - number_of_subjobs_you_wish_to_run`
-
-After editing this file, open `submit_swarm_subjobs.sh` in vim, and edit the following variables:
-
-```
-#BSUB -P BIP180                 # project name
-#BSUB -J openMM_test_ensemble   # job name
-```
-The first variable refers to the ORNL project name that these calculations will be charged to, and the second variable is just the name of the job that will be displayed in the job scheduler.
+`jobName`: what you wish to name the job (this will be publically visible in the job scheduler)
 
 Finally, submit the MD swarm to the job scheduler with the following command:
 
@@ -192,134 +169,11 @@ bjobs
 
 ### Step 4: Concatenate swarm subjobs
 
-Once the above MD swarm has completed, you'll need to concatenate the `.dcd` files for each trajectory in the MD swarm, and place these concatenated trajectory files in a location known to subsequent scripts.
-
-Open `launch_concatenate_subjobs.sh` in vim, and edit the following variables:
-```
-#BSUB -P BIP180  
-#BSUB -J test_concatenate_subjobs
-swarm_number=0
-number_of_trajs_per_swarm=18
-catdcd="/gpfs/alpine/proj-shared/bip180/vmd/vmd_library/plugins/OPENPOWER/bin/catdcd5.1/catdcd"
-structure_file='hdat_3_1_restart_coor.pdb' # must be in ./common
-
-```
-The 2 `BSUB` settings were described in the previous step. 
-`swarm_number` is the swarm # for which you wish to concatenate each trajectories dcds. 
-`structure_file` is the name of the initial structure found in `./common`).
-
-`catdcd` is the path to the catdcd executable, found in the VMD installation directories (see the default value above for a hint to where you will find it--the specific path will depend on where you installed VMD).
-
-After editing this file, launch the concatenation job with the following command:
-```
-./launch_concatenate_subjobs.sh
-```
-
-This submits the concatenation job to the job scheduler. This job will create the directory `swarms_concatenated_temp/` in your repository's parent directory. **Note: the directory is describecd as 'temp' because the trajectories in this directory are convenient duplicates of what is found in `./raw_swarms`. At some point, the directory `swarms_concatenated_temp/` should be deleted. (still considering in-house when this should occur)
-
-Inside `swarms_concatenated_temp/`, you'll find `./0000` ([0-9][0-9][0-9][0-9] depending on your swarm number). Inside of `./0000`, you'll find:
-*  0000.trr
-*  0001.trr
-*  ...
-*  n.trr # where n = number_of_trajs_per_swarm - 1, zero padded to a width of 4
-
-These `.trr` files are used by subsequent analysis scripts.
-
+Needs to be re-written to support multiple systems! Work-in-progress!
 ---
 
-### Step 5: Calculate tICA parameters
 
-The next step is to measure the previously described CVs, for each of the swarm's trajectories, and use these measurements to calculate tICA parameters. First, open `launch_calculate_tica_parameters.sh` in vim and edit the following:
-```
-#BSUB -P BIP180
-#BSUB -J test_calculate_tica_parameters
-```
-These `BSUB` options were described in earlier steps.
-
-Next, open `calculate_tica_parameters.py` in vim and edit the following:
-```
-vmd_path = "/gpfs/alpine/proj-shared/bip180/vmd/vmd_bin/vmd"
-psf_path = "./common/ionized.psf"
-pdb_path = "./common/hdat_3_1_restart_coor.pdb"
-```
-`vmd_path` is the path to your VMD executable (will depend on where you have installed VMD)
-`psf_path` and `pdb_path` are the initial pdb and psf found in `./common`
-
-Also edit the following:
-```
-tica_lag_time = 5           # 5 steps
-n_clusters = 18             # number of clusters for tICA landscape
-n_sel_clusters = 6          # number of low-populated clusters that frames for new swarms will be taken from
-n_sel_frames = 3            # number of frames to extract from each `n_sel_clusters`
-total_n_of_swarms = 1       # total number of swarms run
-```
-
-**Note:** if just running the template system found in this repository, no need to change the above values. 
-
-**Note:** `n_sel_cluster` * `n_sel_frames` must equal `number_of_trajs_per_swarm`
-
-To run the CV and tICA parameter calculation, run this command:
-```
-bsub launch_calculate_tica_parameters.sh
-
-```
-
-**Note:** the above job submission performs this calculation for EACH of the MD swarm's trajectories. It does this sequentially (one trajectory after another); this will likely be parallelized in future updates. 
-
-Analysis results will be placed in the directory `./analysis`, and will be used in subsequent calculations.
-
----
-
-### Step 6: Calculate tICA projection and select frames for next swarm
-
-The last unique step of this workflow is to project the trajectories onto the tICA space and to select trajectory frames that will act as the new initial conformations for the next MD swarm. **Note:** this trajectory frame selection, from poorly sampled regions of the tICA space, is how this work flow facilitates adaptive sampling.
-
-First, open `launch_tica_and_frame_selection.sh` in vim and edit the following:
-```
-#BSUB -P BIP180 
-#BSUB -J test_tica_and_frame_selection
-```
-These `BSUB` options were described in earlier steps.
-
-Next, open `tica_and_frame_selection.py` in vim and edit the following:
-```
-vmd_path = "/gpfs/alpine/proj-shared/bip180/vmd/vmd_bin/vmd"
-psf_path = "./common/ionized.psf"
-pdb_path = "./common/hdat_3_1_restart_coor.pdb"
-tica_lag_time = 5                       # 5 steps
-n_clusters = 18                         # number of clusters for tICA landscape
-n_sel_clusters = 6                      # number of low-populated clusters that frames for new swarms will be taken from
-n_sel_frames = 3                        # number of frames to extract from each `n_sel_clusters`
-n_traj_in_each_swarm = n_sel_clusters * n_sel_frames
-total_n_of_swarms = 0
-```
-All of these variables must be identical to what you set in `calculate_tica_parameters.py`.
-
-To perform this calculation, run the following command:
-```
-bsub launch_tica_and_frame_selection.sh
-```
-
-This will create additional results file in `./analysis`, as well as create a new directory `./selected_frames`. Inside of selected frames, you'll find: `sel_frames_swarm_0000`. 
-
-In this directory, you'll find `number_of_trajs_per_swarm` number of pdb files:
-
-*  0000_swarm0000_trajXXXX_frameYYYY.pdb
-*  0001_swarm0000_trajXXXX_frameYYYY.pdb
-*  ...
-*  n_swarm0000_trajXXXX_frameYYYY.pdb
-
-Where:
-
-*  `n` is `number_of_trajs_per_swarm` - 1, zero padded to a width of 4. 
-*  `XXXX` is the zero-padded trajectory # where the pdb conformation was found
-*  `YYYY` is the zero-padded is the frame number in the above trajectory where the pdb conformation was found. 
-
-These pdb files will be the initial conformations for the trajectories in the next MD swarm. **Note:** using these `selected` frames is the code's default behavior for any swarm number > 0.
-
----
-
-### Step 7: Repeat steps 2-6!
+### Step 5: Repeat steps 2-4!
 
 To start the next MD swarm, simply go back to [Step 2](#step-2-generate-swarm-directory-structure) and increment the swarm number (in this example case, the next swarm number is 1).
 
