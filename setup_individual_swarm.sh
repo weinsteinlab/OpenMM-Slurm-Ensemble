@@ -19,6 +19,7 @@ CWD=`pwd`
 
 swarm_path=$CWD/raw_swarms/swarm${swarm_number_padded}
 mkdir -p $swarm_path
+mkdir -p $CWD/raw_swarms/submission_logs
 
 # we start with host_number 1 because 0 is the launch node
 host_number=1
