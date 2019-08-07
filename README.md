@@ -136,24 +136,25 @@ These directories will hold all of the files related to running a given swarm's 
 To run all of the trajectories that make up the MD swarm, open `launch_swarm.sh` in vim, and edit the following variables:
 
 ```
-swarm_number=0
-number_of_trajs_per_swarm=24 # MUST be a multiple of 6
-first_subjob=0
-last_subjob=3
+swarmNumber=0
+numberOfTrajsPerSwarm=24
+firstSubjob=0
+lastSubjob=3
+jobName="your_job_name" # no spaces
 ```
 
 The first 2 variables have already been described and must be consistent with whatever was set in `setup_individual_swarm.sh`.
 
 The next 2 variables have to deal with trajectory subjobs. Because Summit has a maximum job runtime of 2 hours, a single trajectory must be run over many subjobs to achieve the needed desired simulation time. The number of subjobs should equal: (total_simulation_time / simulation_time_per_2_hours). **Note: Summit only allows 100 jobs to be submitted per user, so the number of subjobs must be <= 100**
 
-`first_subjob`: is the number of the first subjob, zero indexed. It should be zero, unless a swarm run crashes and needs to be restarted from a given subjob.
-`last_subjob`: this is `n - number_of_subjobs_you_wish_to_run`
+`firstSubjob`: is the number of the first subjob, zero indexed. It should be zero, unless a swarm run crashes and needs to be restarted from a given subjob.
+`lastSubjob`: this is `n - number_of_subjobs_you_wish_to_run`
 `jobName`: what you wish to name the job (this will be publically visible in the job scheduler)
 
 Finally, submit the MD swarm to the job scheduler with the following command:
 
 ```
-./.launch_swarm.sh
+./launch_swarm.sh
 ```
 
 This command submits subjob # `first_subjob` to run first (for all of the trajectories within this swarm), with subsequent subjobs dependent on the successful completion of prior subjobs runs. 
