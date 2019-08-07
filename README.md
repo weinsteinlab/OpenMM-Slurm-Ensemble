@@ -2,11 +2,10 @@
 - [Setup Environment](#setup-enviornment)
 - [Pre-workflow setup](#pre-workflow-setup)
 - [OpenMM Ensemble Workflow](#openmm-ensemble-workflow)
-  * [Step 1: Initial structures](#step-1-initial-structures)
-  * [Step 2: Generate swarm directory structure](#step-2-generate-swarm-directory-structure)
-  * [Step 3: Launching a swarm](#step-3-launching-a-swarm)
-  * [Step 4: Concatenate swarm subjobs](#step-4-concatenate-swarm-subjobs)
-  * [Step 5: Repeat steps 2-6!](#step-7-repeat-steps-2-6)
+  * [Step 1: Generate swarm directory structure](#step-1-generate-swarm-directory-structure)
+  * [Step 2: Launching a swarm](#step-2-launching-a-swarm)
+  * [Step 3: Concatenate swarm subjobs](#step-3-concatenate-swarm-subjobs)
+  * [Step 4: Repeat steps 1-3!](#step-4-repeat-steps-1-3)
 <!-- toc -->
 ---
 # Setup Environment
@@ -132,7 +131,7 @@ These directories will hold all of the files related to running a given swarm's 
 
 ---
 
-### Step 3: Launching a swarm
+### Step 2: Launching a swarm
 
 To run all of the trajectories that make up the MD swarm, open `launch_swarm.sh` in vim, and edit the following variables:
 
@@ -167,14 +166,14 @@ bjobs
 
 ---
 
-### Step 4: Concatenate swarm subjobs
+### Step 3: Concatenate swarm subjobs
 
 Needs to be re-written to support multiple systems! Work-in-progress!
 ---
 
 
-### Step 5: Repeat steps 2-4!
+### Step 4: Repeat steps 1-3!
 
-To start the next MD swarm, simply go back to [Step 2](#step-2-generate-swarm-directory-structure) and increment the swarm number (in this example case, the next swarm number is 1).
+To start the next MD swarm, simply go back to [Step 2](#step-1-generate-swarm-directory-structure) and increment the swarm number (in this example case, the next swarm number is 1).
 
 ---
