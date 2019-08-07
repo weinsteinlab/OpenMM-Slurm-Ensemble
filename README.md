@@ -66,8 +66,6 @@ cd my_adaptive_sampling_run # or whatever the directory is named at this point
 
 **Note: directory is hereafter referred to as the parent directory**
 
-**Note: you can skip the rest of this section and go to [Adaptive Sampling Workflow](#adaptive-sampling-workflow) if you are just running the test system found in this repository.**
-
 
 Next, you'll need to populate/edit files in the directory `./inputs`
 
