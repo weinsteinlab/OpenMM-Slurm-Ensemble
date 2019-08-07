@@ -20,7 +20,7 @@ jobName="your_job_name" # no spaces
 firstIteration=0
 numberOfNodes=`expr $numberOfTrajsPerSwarm / 6`
 swarmNumber_padded=`printf %04d $swarmNumber`
-fullJobName=${jobName}_${swarmNumber_padded}
+fullJobName=${jobName}_swarm${swarmNumber_padded}
 
 for (( subjob=$firstSubjob; subjob<=$lastSubjob; subjob++ ))
 do
