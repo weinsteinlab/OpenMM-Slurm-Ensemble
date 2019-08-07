@@ -1,22 +1,16 @@
 # Table of contents:
-- [Install Dependencies](#install-dependencies)
-  * [OpenMM](#openmm)
-  * [VMD](#vmd)
-  * [Python Libraries](#python-libraries)
+- [Setup Environment](#setup-enviornment)
 - [Pre-workflow setup](#pre-workflow-setup)
   * [./common](#common)
-  * [./tcls](#tcls)
-- [Adaptive Sampling Workflow](#adaptive-sampling-workflow)
+- [OpenMM Ensemble Workflow](#openmm-ensemble-workflow)
   * [Step 1: Initial structures](#step-1-initial-structures)
   * [Step 2: Generate swarm directory structure](#step-2-generate-swarm-directory-structure)
   * [Step 3: Launching a swarm](#step-3-launching-a-swarm)
   * [Step 4: Concatenate swarm subjobs](#step-4-concatenate-swarm-subjobs)
-  * [Step 5: Calculate tICA parameters](#step-5-calculate-tica-parameters)
-  * [Step 6: Calculate tICA projection and select frames for next swarm](#step-6-calculate-tica-projection-and-select-frames-for-next-swarm)
-  * [Step 7: Repeat steps 2-6!](#step-7-repeat-steps-2-6)
+  * [Step 5: Repeat steps 2-6!](#step-7-repeat-steps-2-6)
 <!-- toc -->
 ---
-# Install Dependencies
+# Setup Environment
 
 This molecular dynamics (MD) adaptive sampling workflow has several software dependencies: 
 
@@ -24,105 +18,34 @@ This molecular dynamics (MD) adaptive sampling workflow has several software dep
 *  VMD,
 *  several python libraries
 
-In this section, we describe how to install these dependencies on Summit. 
+This software is already installed for the Weinstein lab. In this section, we describe how to setup your environment to use these installations.
 
-### OpenMM
-This procedure assumes you have installed miniConda on Summit in a directory that you own. For instructions on how to do this, please see:
-[Miniconda on Power9](https://docs.conda.io/en/latest/miniconda.html)
-
-In brief, here are the steps to install Miniconda on Summit. These steps will likely atrophy, but as of 6/10/2019:
+Add the following to your `~.bashrc`
 
 ```
-# ssh onto Summit login node
-cd where_you_wish_to_download_Miniconda_installer
-wget 'https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-ppc64le.sh'
-chmod 755 ./Miniconda3-latest-Linux-ppc64le.sh
-./Miniconda3-latest-Linux-ppc64le.sh
+export PATH=$PATH:/ccs/proj/bip180/vmd-1.9.3/install_bin
+export PATH=$PATH:/ccs/proj/bip180/vmd-1.9.3/plugins/OPENPOWER/bin/catdcd5.1
 
-# follow instructions from installer
-```
-
-Once Miniconda is installed, you'll need to create a conda environment for openMM:
-```
-conda create -n openmm740_cuda101 python=3.7.3
-```
-
-(the following instructions are adapted from [Installing OpenMM on Summit](https://github.com/inspiremd/conda-recipes-summit))
-
-Activate this environment:
-```
-conda activate openmm740_cuda101
-```
-
-Add conda-forge and omnia to your channel list and update packages
-```
-conda config --add channels omnia --add channels conda-forge
-conda update --yes --all
-```
-
-Next, install OpenMM:
-```
-conda install --yes -c omnia-dev/label/cuda92 openmm
-```
-
-**Note:** in the above, cuda92 is referenced, but we need to use cuda10.1.105. In order to do so, we need to rebuild several packages and openMM first. 
-
-Before rebuilding any packages, we'll first need to install a few more packages:
-```
-conda install numpy swig fftw3f doxygen pymbar
-```
-
-To rebuild these packages, you'll need to grab a copy of [this GitHub repository](https://github.com/inspiremd/conda-recipes-summit):
-```
-cd where_you_want_to_download_the_git_repo
-git clone https://github.com/inspiremd/conda-recipes-summit.git
-cd conda-recipes-summit/
-conda build --numpy 1.13.1 --python 3.6.3 parmed
-conda install --use-local parmed
-```
-
-**Note:** in the above I reference python 3.6.3--this is because python gets downgraded due to dependency-python compatibility issues.
-
-Finally, it's time to rebuild openMM:
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/ccs/proj/bip180/anaconda_2019_07/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/ccs/proj/bip180/anaconda_2019_07/etc/profile.d/conda.sh" ]; then
+        . "/ccs/proj/bip180/anaconda_2019_07/etc/profile.d/conda.sh"
+    else
+        export PATH="/ccs/proj/bip180/anaconda_2019_07/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
 ```
-module unload cuda
-module load cuda/10.1.105
-CUDA_VERSION="10.1" CUDA_SHORT_VERSION="101" conda build --numpy 1.15 --python 3.6 openmm
-conda install --yes --use-local openmm
-```
-
-### VMD
-Installation of [VMD](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD) on Summit is trivial (however, you will have to create a free account).
-
-After you have created the account and agreed to the license, download the link to an appropriate directory that you own on Summit. Un-tar the VMD tarball, and follow the installation instructions found in the README file.
+**Note:** Make SURE there are **NO** other references to (ana)conda or VMD in your `~/.bashrc` or you may get very unpredictable results.
 
 
-### Python Libraries
-
-**Note:** if you already have a conda environment  activated, make sure to deactivate it before proceeding.
-```
-conda deactivate
-```
-
-First, create a conda environment for tICA's python dependencies:
-
-**Note:** if you already have a conda environment activated, make sure to deactivate it before proceeding.
-```
-conda create -n tica_env python=3.7.3
-```
-
-Next, activate this environment:
-```
-conda activate tica_env
-```
-
-Once activated, let's install the needed packages and python libraries:
-```
-conda install numpy matplotlib tqdm h5py scikit-learn
-```
-
-That's it--if everything went correctly, all dependencies needed for this workflow should now be installed!
+That's it--if everything went correctly, all dependencies needed for this workflow should now be available!
 
 # Pre-workflow setup
 
