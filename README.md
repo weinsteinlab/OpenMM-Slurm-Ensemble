@@ -89,6 +89,8 @@ Each subdirectory must contain all of the simulation system-specific files neede
 
 **Note:** Until experienced with Summit's performance for a given set of systems, I recommend only requesting 80% of the number of steps that can be performed in 2 hours. This way, there is little risk of any of the systems running out of time, creating a mess to clean up.
 
+**VERY IMPORTANT:** `input.py` only contains ensemble-related information. All descriptions of input files are automatically understood by what is present in each subdirectory. Do NOT describe input files in this file, or the scripts will break.
+
 Finally, if you only have 1 system to run (with many replicas), just create 1 subdirectory in `inputs`.
 
 
