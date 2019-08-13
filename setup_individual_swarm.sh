@@ -21,8 +21,6 @@ swarm_path=$CWD/raw_swarms/swarm${swarm_number_padded}
 mkdir -p $swarm_path
 mkdir -p $CWD/raw_swarms/submission_logs
 
-# we start with host_number 1 because 0 is the launch node
-host_number=1
 
 # starting with input directory '0000'
 directoryNumber=0
@@ -48,15 +46,6 @@ do
     currentNumberOfReplicas=$(cat inputs/${directoryNumberPadded}/numberOfReplicas.txt)
   fi
      
-  # each node has 6 GPUs, so the following modulo makes sure each traj is assigned
-  # is assigned a GPU # in the range 0-5.
-  gpu_number=$(expr $traj_number % 6)
-  cp ./common/gpu_${gpu_number}.erf $traj_path/.
-
-  # Each host/node can accept 6 jobs, so after 6 jobs have been submitted,
-  # the $host_number is incremented to start submitting on the subsequent node. 
-  if [ $gpu_number == 0 ] && [ $traj_number != 0 ]; then ((host_number++)); fi
-  sed -i "s/X/$host_number/" $traj_path/gpu_${gpu_number}.erf
 done
 
 exit
