@@ -10,30 +10,37 @@
 # use: ./launch_swarm.sh
 
 swarmNumber=0
-numberOfTrajsPerSwarm=24
-firstSubjob=0
-lastSubjob=3
-jobName="your_job_name" # no spaces
+numberOfTrajsPerSwarm=6
+firstSubjob=0  # should be number of next subjob to be run. For example, if you haven't 
+               # run any subjobs yet, this should be set to 1, as the starting input 
+               # structures are considered to have come from subjob 0. If the last subjob 
+               # completed was `5`, this should be 6, and so on.
+
+lastSubjob=1   # obviously this MUST be larger that $first_subjob
+
+jobName="openMM_test_ensemble" # no spaces
+partitionName=edison            #Slurm partition to run job on
 
 # do not edit below this line
 
 firstIteration=0
-numberOfNodes=`expr $numberOfTrajsPerSwarm / 6`
 swarmNumber_padded=`printf %04d $swarmNumber`
 fullJobName=${jobName}_swarm${swarmNumber_padded}
+indexed_num_of_trajs=$((number_of_trajs_per_swarm-1))
+
 
 for (( subjob=$firstSubjob; subjob<=$lastSubjob; subjob++ ))
 do
-  if [ $firstIteration -eq 0 ]
+  if [ $first_iteration -eq 0 ]
   then
-    jobSchedulerOutput="$(bsub -P BIP180 -W 2:00 -nnodes $numberOfNodes -J ./raw_swarms/submission_logs/${fullJobName} -alloc_flags gpumps ./submit_swarm_subjobs.sh $swarmNumber $numberOfTrajsPerSwarm $subjob)"
+     job_scheduler_output="$(sbatch -J $jobName -N1 -n1 -p $partitionName --cpus-per-task=1 --mem=20G --gres=gpu:1 -t 0-00:02:00 -o ./submission_logs/slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjob.sh $swarmNumber $numberOfTrajsPerSwarm $subjob)"       
   else
-    jobSchedulerOutput="$(bsub -P BIP180 -W 2:00 -nnodes $numberOfNodes -J ./raw_swarms/submission_logs/${fullJobName} -alloc_flags gpumps -w $job_scheduler_number ./submit_swarm_subjobs.sh $swarmNumber $numberOfTrajsPerSwarm $subjob)"
+     job_scheduler_output="$(sbatch --depend=afterok:${job_scheduler_number} -J $jobName -N1 -n1 -p $partition_name --cpus-per-task=1 --mem=20G --gres=gpu:1 -t 0-00:02:00 -o ./submission_logs/${fullJobName}_slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjob.sh $swarmNumber $numberOfTrajsPerSwarm $subjob)" 
   fi
 
-  job_scheduler_number=$(echo $jobSchedulerOutput | awk '{print $2}' | sed -e 's/<//' | sed -e 's/>//')
-  let firstIteration=1
-done 
+  job_scheduler_number=$(echo $job_scheduler_output | awk '{print $4}')
+  let first_iteration=1
+done
 
 exit
 
