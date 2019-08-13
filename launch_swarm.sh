@@ -31,7 +31,7 @@ indexed_num_of_trajs=$((number_of_trajs_per_swarm-1))
 
 for (( subjob=$firstSubjob; subjob<=$lastSubjob; subjob++ ))
 do
-  if [ $first_iteration -eq 0 ]
+  if [ $firstIteration -eq 0 ]
   then
      job_scheduler_output="$(sbatch -J $jobName -N1 -n1 -p $partitionName --cpus-per-task=1 --mem=20G --gres=gpu:1 -t 0-00:02:00 -o ./submission_logs/slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjob.sh $swarmNumber $numberOfTrajsPerSwarm $subjob)"       
   else
@@ -39,7 +39,7 @@ do
   fi
 
   job_scheduler_number=$(echo $job_scheduler_output | awk '{print $4}')
-  let first_iteration=1
+  let firstIteration=1
 done
 
 exit
