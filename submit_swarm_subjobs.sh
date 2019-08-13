@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 # use: this script is used by ./launch_swarm.sh and is not
 # meant to be run directly.
