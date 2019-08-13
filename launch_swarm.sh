@@ -26,7 +26,7 @@ partitionName=edison            #Slurm partition to run job on
 firstIteration=0
 swarmNumber_padded=`printf %04d $swarmNumber`
 fullJobName=${jobName}_swarm${swarmNumber_padded}
-indexed_num_of_trajs=$((number_of_trajs_per_swarm-1))
+indexed_num_of_trajs=$((numberOfTrajsPerSwarm-1))
 
 
 for (( subjob=$firstSubjob; subjob<=$lastSubjob; subjob++ ))
