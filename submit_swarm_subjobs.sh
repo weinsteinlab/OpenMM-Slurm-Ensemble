@@ -21,4 +21,4 @@ traj_path=$swarm_path/swarm${swarm_number_padded}_traj$traj_number_padded
 
 cd $traj_path
 
-./run_python $subjob_number > ./python_log.txt 2>&1 &
+./run_python $subjob_number > ./python_log.txt 
