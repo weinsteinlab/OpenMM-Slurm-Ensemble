@@ -65,7 +65,7 @@ setupLog.write("Mass Files: %s\n" % mass_files)
 setupLog.write("Parameter Files: %s\n" % parameter_files)
 
 checkpointUsed="TRUE" if (int(subjob_number) > 0) else "FALSE" 
-setupLog.write("Checkpoint file used: %s", checkpointUsed)
+setupLog.write("Checkpoint file used: %s", % checkpointUsed)
 setupLog.close()
 
 
