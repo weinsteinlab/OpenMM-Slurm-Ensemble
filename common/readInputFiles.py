@@ -56,6 +56,8 @@ setupLog = open('%s_setupLog.txt' % base_name, 'w')
 setupLog.write("OpenMM Version: %s\n" % calculationVersion)
 setupLog.write("Git Revision: %s\n\n" % calculationGit)
 setupLog.write("This calculation was started: %s\n\n" % dateAndTimeNow)
+setupLog.write("Compute Node: %s\n" % thisServer)
+
 setupLog.write("These are the files that were read into this subjob.\n")
 setupLog.write("Note: if checkpoint file is read, values in some of these files will not used.\n\n")
 setupLog.write("psf file: %s\n" % str(''.join(glob.glob('*.psf'))))

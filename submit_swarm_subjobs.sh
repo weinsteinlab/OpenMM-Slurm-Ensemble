@@ -21,4 +21,11 @@ traj_path=$swarm_path/swarm${swarm_number_padded}_traj$traj_number_padded
 
 cd $traj_path
 
+finished=$(tail -n1 python_run.log)
+
+if [ $subjob_number > 0 ] && [ $finished != 'FINISHED' ]
+then 
+  exit 1
+fi
+
 ./run_python.sh $subjob_number > ./python_log.txt 
