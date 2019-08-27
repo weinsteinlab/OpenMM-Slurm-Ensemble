@@ -14,12 +14,10 @@ subjob_number = sys.argv[1]
 
 base_name="./swarm%s_traj%s_subjob%s" %(str(swarm_number).zfill(4), str(traj_number).zfill(4),str(subjob_number).zfill(4))
 
-
 # Output Files
 dcd_name       = "%s.dcd" %(base_name)
 log_name       = "%s.log" %(base_name)
 final_pdb_name = "%s.pdb" %(base_name)
-
 
 # Input Files
 mass_files = str(','.join(glob.glob('*.rtf')))
@@ -29,6 +27,8 @@ psf = CharmmPsfFile(str(''.join(glob.glob('*.psf'))))
 pdb = PDBFile(sorted(glob.glob('*.pdb'))[0])
 params = CharmmParameterSet(mass_files, parameter_files)
 
+if (int(subjob_number) > 0):
+  priorRestart = sorted(glob.glob('*.xml'))[-1]
 
 # Compute the box dimensions from the coordinates and set the box lengths (only
 # orthorhombic boxes are currently supported in OpenMM)
@@ -56,18 +56,22 @@ setupLog = open('%s_setupLog.txt' % base_name, 'w')
 setupLog.write("OpenMM Version: %s\n" % calculationVersion)
 setupLog.write("Git Revision: %s\n\n" % calculationGit)
 setupLog.write("This calculation was started: %s\n\n" % dateAndTimeNow)
-setupLog.write("Compute Node: %s\n" % thisServer)
+setupLog.write("Compute Node: %s\n\n" % thisServer)
 
 setupLog.write("These are the files that were read into this subjob.\n")
 setupLog.write("Note: if checkpoint file is read, values in some of these files will not used.\n\n")
 setupLog.write("psf file: %s\n" % str(''.join(glob.glob('*.psf'))))
 setupLog.write("pdb file: %s\n" % sorted(glob.glob('*.pdb'))[0])
-setupLog.write("xsc file: %s\n" % sorted(glob.glob('*.xsc'))[0])
+setupLog.write("xsc file: %s\n\n" % sorted(glob.glob('*.xsc'))[0])
 setupLog.write("Mass Files: %s\n" % mass_files)
-setupLog.write("Parameter Files: %s\n" % parameter_files)
+setupLog.write("Parameter Files: %s\n\n" % parameter_files)
 
-checkpointUsed="TRUE" if (int(subjob_number) > 0) else "FALSE" 
-setupLog.write("Checkpoint file used: %s" % checkpointUsed)
+restartUsed="TRUE" if (int(subjob_number) > 0) else "FALSE" 
+setupLog.write("Restart file used? %s\n" % restartUsed)
+
+if (int(subjob_number) > 0):
+  setupLog.write("Restart file: %s" % priorRestart )
+ 
 setupLog.close()
 
 
