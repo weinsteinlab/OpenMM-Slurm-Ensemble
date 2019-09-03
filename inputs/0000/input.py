@@ -21,7 +21,7 @@ friction = 1.0/picosecond
 
 
 # Simulation Options
-steps = 100000
+steps = 160000
 equilibrationSteps = 0
 dcdReporter = DCDReporter(dcd_name, 20000)
 
@@ -45,20 +45,18 @@ simulation.context.setPositions(positions)
 simulation.context.setVelocitiesToTemperature(temperature)
 simulation.currentStep = 0
 
-if int(subjob_number) > 0: simulation.loadCheckpoint('checkpnt.chk')
+if int(subjob_number) > 0: simulation.loadState(priorRestart)
 
 
 # Simulate
 print('Simulating...')
 simulation.reporters.append(dcdReporter)
 simulation.reporters.append(dataReporter)
-simulation.reporters.append(CheckpointReporter('checkpnt.chk', 20000))
 simulation.step(steps)
 simulation.saveState('final_state_file.xml')
 
 positions = simulation.context.getState(getPositions=True).getPositions()
 PDBFile.writeFile(simulation.topology, positions, open(final_pdb_name, 'w'))
 
-os.system('cp checkpnt.chk %s.chk' %base_name)
 os.system('cp final_state_file.xml %s_statefile.xml' %base_name)
 print("FINISHED")
