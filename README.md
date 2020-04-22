@@ -51,7 +51,7 @@ That's it--if everything went correctly, all dependencies needed for this workfl
 The first step in using these tools is to first clone a copy of this repository, in a directory that is appropriate for running swarms of MD simulations ('swarm' is defined in the [this section](#step-1-initial-structures)).
 ```
 cd wherever_you_wish_to_run
-git@scu-git.med.cornell.edu:des2037/summit-openmm-ensemble.git
+git clone git@github.com:weinsteinlab/OpenMM-Slurm-Ensemble.git
 ```
 
 Optionally, you can rename the cloned repository to something meaningful for your calculations
