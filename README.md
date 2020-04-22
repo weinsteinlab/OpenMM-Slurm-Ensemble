@@ -82,7 +82,7 @@ Each subdirectory must contain all of the simulation system-specific files neede
     * steps = 100000: the number of simulation steps per simulation subjob (subjobs are described later), but basically this should be the number of steps that can be run in 2 hours or less.
     * dcdReporter = DCDReporter(dcd_name, 20000): here the last number indicates how often the coordinates are written to the .dcd file; in this example, it's every 20,000 steps.
     * dataReporter = StateDataReporter(log_name, 20000, ...: here, the 20000 indicates how frequently the log file is populated with simulation details, such as various energies and simulation progress.
-*  **numberOfReplicas.txt**: this file contains to number of replicas to run for this system. MUST be a multiple of 6.
+*  **numberOfReplicas.txt**: this file contains to number of replicas to run for this system. 
 
 **Note:** make sure you have benchmarked each different system and have adjusted its individual `steps=` parameter accordingly. This workflow supports running an arbitrarily high number of systems (up to 9,999) with no restrictions on size differences. However, this functionality relies on adjusting each systems `steps=` to what can run in 2 hours. 
 
@@ -105,11 +105,11 @@ Open ```setup_individual_swarm.sh``` in vim, and edit the following variables:
 
 ```
 swarm_number=0
-number_of_trajs_per_swarm=24
+number_of_trajs_per_swarm=6
 ```
 
 `swarm_number=0` is the swarm number you wish to run; it is zero indexed.
-`number_of_trajs_per_swarm=24` is the number of MD trajectories per MD swarm. MUST be a multiple of 6
+`number_of_trajs_per_swarm=6` is the number of MD trajectories per MD swarm.
 
 After editing this file, generate the initial structures directory with the following command:
 ```
@@ -136,7 +136,7 @@ To run all of the trajectories that make up the MD swarm, open `launch_swarm.sh`
 
 ```
 swarmNumber=0
-numberOfTrajsPerSwarm=24
+numberOfTrajsPerSwarm=6
 firstSubjob=0
 lastSubjob=3
 jobName="your_job_name" # no spaces
@@ -161,7 +161,7 @@ This command submits subjob # `first_subjob` to run first (for all of the trajec
 The status of the MD swarm can be checked with the following command:
 
 ```
-bjobs
+squeue -u your_CWID
 ```
 
 ---
