@@ -86,7 +86,7 @@ Each subdirectory must contain all of the simulation system-specific files neede
 
 **Note:** make sure you have benchmarked each different system and have adjusted its individual `steps=` parameter accordingly. This workflow supports running an arbitrarily high number of systems (up to 9,999) with no restrictions on size differences. However, this functionality relies on adjusting each systems `steps=` to what can run in 2 hours. 
 
-**Note:** Until experienced with Summit's performance for a given set of systems, I recommend only requesting 80% of the number of steps that can be performed in 2 hours. This way, there is little risk of any of the systems running out of time, creating a mess to clean up.
+**Note:** I recommend only requesting 80% of the number of steps that can be performed in 2 hours. This way, there is little risk of any of the systems running out of time, creating a mess to clean up.
 
 **VERY IMPORTANT:** `input.py` only contains ensemble-related information. All descriptions of input files are automatically understood by what is present in each subdirectory. Do NOT describe input files in this file, or the scripts will break.
 
@@ -144,7 +144,7 @@ jobName="your_job_name" # no spaces
 
 The first 2 variables have already been described and must be consistent with whatever was set in `setup_individual_swarm.sh`.
 
-The next 2 variables have to deal with trajectory subjobs. A single trajectory must be run over many subjobs to achieve the needed desired simulation time. The number of subjobs should equal: (total_simulation_time / simulation_time_per_subjob length). 
+The next 2 variables have to deal with trajectory subjobs. A single trajectory must be run over many subjobs to achieve the needed desired simulation time. 
 
 `firstSubjob`: is the number of the first subjob, zero indexed. It should be zero, unless a swarm run crashes and needs to be restarted from a given subjob.
 `lastSubjob`: this is `n - number_of_subjobs_you_wish_to_run`
