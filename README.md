@@ -56,11 +56,11 @@ git clone git@github.com:weinsteinlab/OpenMM-Slurm-Ensemble.git
 
 Optionally, you can rename the cloned repository to something meaningful for your calculations
 ```
-mv adaptive-sampling-workflow-tools-for-summit my_adaptive_sampling_run
+mv OpenMM-Slurm-Ensemble my_OpenMM_run
 ```
 Once this is done, go into this directory:
 ```
-cd my_adaptive_sampling_run # or whatever the directory is named at this point
+cd my_OpenMM-Slurm-Ensemble_run # or whatever the directory is named at this point
 ```
 
 **Note: directory is hereafter referred to as the parent directory**
