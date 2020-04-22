@@ -21,27 +21,26 @@ This software is already installed for the Weinstein lab. In this section, we de
 Add the following to your `~.bashrc`
 
 ```
-export PATH=$PATH:/ccs/proj/bip180/vmd-1.9.3/install_bin
-export PATH=$PATH:/ccs/proj/bip180/vmd-1.9.3/plugins/OPENPOWER/bin/catdcd5.1
+export PATH=$PATH:/athena/hwlab/scratch/lab_data/software/vmd/vmd-1.9.3_athena/install_bin
+export PATH=$PATH:/athena/hwlab/scratch/lab_data/software/vmd/vmd-1.9.3_athena/plugins/LINUXAMD64/bin/catdcd5.1
 
-# >>> conda initialize >>>
+#>>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/ccs/proj/bip180/anaconda_2019_07/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/athena/hwlab/scratch/lab_data/software/lab_anaconda/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/ccs/proj/bip180/anaconda_2019_07/etc/profile.d/conda.sh" ]; then
-        . "/ccs/proj/bip180/anaconda_2019_07/etc/profile.d/conda.sh"
+    if [ -f "/athena/hwlab/scratch/lab_data/software/lab_anaconda/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/athena/hwlab/scratch/lab_data/software/lab_anaconda/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/ccs/proj/bip180/anaconda_2019_07/bin:$PATH"
+        export PATH="/athena/hwlab/scratch/lab_data/software/lab_anaconda/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<<
+# <<< conda initialize <<</vmd
 
 ```
 **Note:** Make SURE there are **NO** other references to (ana)conda or VMD in your `~/.bashrc` or you may get very unpredictable results.
-
 
 That's it--if everything went correctly, all dependencies needed for this workflow should now be available!
 
