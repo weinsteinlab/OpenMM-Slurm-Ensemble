@@ -144,7 +144,7 @@ jobName="your_job_name" # no spaces
 
 The first 2 variables have already been described and must be consistent with whatever was set in `setup_individual_swarm.sh`.
 
-The next 2 variables have to deal with trajectory subjobs. Because Summit has a maximum job runtime of 2 hours, a single trajectory must be run over many subjobs to achieve the needed desired simulation time. The number of subjobs should equal: (total_simulation_time / simulation_time_per_2_hours). **Note: Summit only allows 100 jobs to be submitted per user, so the number of subjobs must be <= 100**
+The next 2 variables have to deal with trajectory subjobs. A single trajectory must be run over many subjobs to achieve the needed desired simulation time. The number of subjobs should equal: (total_simulation_time / simulation_time_per_subjob length). 
 
 `firstSubjob`: is the number of the first subjob, zero indexed. It should be zero, unless a swarm run crashes and needs to be restarted from a given subjob.
 `lastSubjob`: this is `n - number_of_subjobs_you_wish_to_run`
