@@ -5,20 +5,43 @@
 
 swarm_number=$1
 number_of_trajs_per_swarm=$2
-subjob_number=$3
 
 # do not edit below this line
 
 swarm_number_padded=`printf %04d $swarm_number`
-subjob_number_padded=`printf %04d $subjob_number`
-
 CWD=`pwd`
 swarm_path=$CWD/raw_swarms/swarm${swarm_number_padded}
 
 
-traj_number_padded=`printf %04d $SLURM_ARRAY_TASK_ID`
-traj_path=$swarm_path/swarm${swarm_number_padded}_traj$traj_number_padded
+numberOfFinishedRuns=$(find ./raw_swarms/. -name 'python_run.log' -exec tail -n1 {} \; | grep FINISHED | wc -l)
+subjob_number=0
+isPriorRun=$(ls ${CWD}/raw_swarms/swarm${swarm_number_padded}/swarm${swarm_number_padded}_traj0000/*subjob*.log 2> /dev/null | tail -n1 | wc -l)
 
-cd $traj_path
+if [ $isPriorRun == 1 ]; then
+    full_name=$(ls ${CWD}/raw_swarms/swarm${swarm_number_padded}/swarm${swarm_number_padded}_traj0000/*subjob*.log 2> /dev/null | tail -n1)
+    padded_subjob_number=${full_name: -8:-4}
+    subjob_number=$((10#$padded_subjob_number))
+    ((subjob_number++))
+fi
 
-./run_python.sh $subjob_number > ./python_log.txt 
+if [ $subjob_number -gt 0 ] && [ $numberOfFinishedRuns != $number_of_trajs_per_swarm ]
+then
+  ((subjob_number--))
+  touch ./subjob_${subjob_number}_FAILED
+  scancel $SLURM_JOB_ID
+  exit 1
+fi
+
+
+for ((traj_number=0; traj_number<$number_of_trajs_per_swarm; traj_number++)); do
+    traj_number_padded=`printf %04d $traj_number`
+    traj_path=$swarm_path/swarm${swarm_number_padded}_traj$traj_number_padded
+
+    cd $traj_path
+
+    srun -N1 --gres=gpu:32g:1 --mem=100G ./run_python.sh $subjob_number > ./python_log.txt &
+done
+
+wait
+
+exit 
