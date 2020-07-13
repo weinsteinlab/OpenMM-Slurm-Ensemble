@@ -9,6 +9,9 @@ conda activate openmm_7.4.0
 
 subjob_number=$1
 
+mass_and_parameter_files=\"$(echo 'all_masses.rtf", "'$(echo `ls *.prm` | sed 's/ /\", "/g'))\"
+sed -i "s/parameterz/$mass_and_parameter_files/" ./readInputFiles.py
+
 echo $SLURM_JOB_ID
 
 if [ $subjob_number -gt 0 ]
