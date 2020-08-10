@@ -25,7 +25,7 @@ parameter_files = str(','.join(glob.glob('*.prm')))
 
 psf = CharmmPsfFile(str(''.join(glob.glob('*.psf'))))
 pdb = PDBFile(sorted(glob.glob('*.pdb'))[0])
-params = CharmmParameterSet(mass_files, parameter_files)
+params = CharmmParameterSet(mass_files, parameterz)
 
 if (int(subjob_number) > 0):
   priorRestart = sorted(glob.glob('*.xml'))[-1]
