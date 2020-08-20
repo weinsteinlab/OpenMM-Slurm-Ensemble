@@ -18,8 +18,11 @@ prior_subjob_number=0
 subjob_number=0
 isPriorRun=$(ls ${CWD}/raw_swarms/swarm${swarm_number_padded}/swarm${swarm_number_padded}_traj0000/*subjob*.log 2> /dev/null | tail -n1 | wc -l)
 
+traj_number_padded=`printf %04d $SLURM_ARRAY_TASK_ID`
+traj_path=$swarm_path/swarm${swarm_number_padded}_traj$traj_number_padded
+
 if [ $isPriorRun == 1 ]; then
-    full_name=$(ls ${CWD}/raw_swarms/swarm${swarm_number_padded}/swarm${swarm_number_padded}_traj0000/*subjob*.log 2> /dev/null | tail -n1)
+    full_name=$(ls ${traj_path}/*subjob*.log 2> /dev/null | tail -n1)
     padded_subjob_number=${full_name: -8:-4}
     subjob_number=$((10#$padded_subjob_number))
     prior_subjob_number=${subjob_number}
@@ -32,12 +35,9 @@ if [ $subjob_number -gt 0 ] && [ $numberOfFinishedRuns != $number_of_trajs_per_s
 then
   ((subjob_number--))
   touch ./subjob_${subjob_number}_FAILED
-  scancel $SLURM_JOB_ID
+  scancel -n $SBATCH_JOB_NAME
   exit 1
 fi
-
-traj_number_padded=`printf %04d $SLURM_ARRAY_TASK_ID`
-traj_path=$swarm_path/swarm${swarm_number_padded}_traj$traj_number_padded
 
 cd $traj_path
 
