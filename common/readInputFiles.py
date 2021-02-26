@@ -5,6 +5,21 @@ from simtk.openmm.app import *
 from simtk.unit import *
 from sys import stdout
 
+def read_params(filename):
+    extlist = ['rtf', 'prm', 'str']
+
+    parFiles = ()
+    for line in open(filename, 'r'):
+        if '!' in line: line = line.split('!')[0]
+        parfile = line.strip()
+        if len(parfile) != 0:
+            ext = parfile.lower().split('.')[-1]
+            if not ext in extlist: continue
+            parFiles += ( parfile, )
+
+    params = CharmmParameterSet( *parFiles )
+    return params
+
 # command_line variables
 current_directory = os.path.basename(os.getcwd())
 
@@ -25,7 +40,7 @@ parameter_files = str(','.join(glob.glob('*.prm')))
 
 psf = CharmmPsfFile(str(''.join(glob.glob('*.psf'))))
 pdb = PDBFile(sorted(glob.glob('*.pdb'))[0])
-params = CharmmParameterSet(mass_files, parameter_files)
+params = read_params('./toppar.str')
 
 if (int(subjob_number) > 0):
   priorRestart = sorted(glob.glob('*.xml'))[-1]

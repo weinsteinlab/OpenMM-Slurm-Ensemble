@@ -9,19 +9,19 @@ nonbondedCutoff = 12*angstroms
 switchDistance=10*angstroms
 
 ewaldErrorTolerance = 0.0005
-constraints = AllBonds
+constraints = HBonds
 rigidWater = True
 constraintTolerance = 0.000001
 
 
 # Integration Options
 dt = 0.004*picoseconds
-temperature = 310*kelvin
+temperature = 310.15*kelvin
 friction = 1.0/picosecond
 
 
 # Simulation Options
-steps = 160000
+steps = 1300000
 equilibrationSteps = 0
 dcdReporter = DCDReporter(dcd_name, 20000)
 
@@ -35,7 +35,7 @@ positions = pdb.positions
 system = psf.createSystem(params, nonbondedMethod=PME, nonbondedCutoff=nonbondedCutoff, constraints=constraints, rigidWater=rigidWater, ewaldErrorTolerance=ewaldErrorTolerance, switchDistance=switchDistance, hydrogenMass=4*amu)
 system.addForce(MonteCarloMembraneBarostat(1.01325*bar, 0*bar*nanometer, 310*kelvin, MonteCarloMembraneBarostat.XYIsotropic, MonteCarloMembraneBarostat.ZFree))
 
-integrator = LangevinIntegrator(temperature, friction, dt)
+integrator = LangevinMiddleIntegrator(temperature, friction, dt)
 integrator.setConstraintTolerance(constraintTolerance)
 simulation = Simulation(topology, system, integrator, platform, platformProperties)
 simulation.context.setPositions(positions)

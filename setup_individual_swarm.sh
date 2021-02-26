@@ -10,7 +10,7 @@
 # Use: ./setup_individual.sh 
 
 swarm_number=0
-number_of_trajs_per_swarm=6
+number_of_trajs_per_swarm=72
 
 # do not edit below this line
 
@@ -47,5 +47,7 @@ do
   fi
      
 done
+
+cp -rp ./common/toppar $CWD/raw_swarms/swarm${swarm_number_padded}/.
 
 exit
