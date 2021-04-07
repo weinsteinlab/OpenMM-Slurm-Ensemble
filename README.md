@@ -64,6 +64,7 @@ mv OpenMM-Slurm-Ensemble my_OpenMM_run
 Once this is done, go into this directory:
 ```
 cd my_OpenMM-Slurm-Ensemble_run # or whatever the directory is named at this point
+git checkout rpi # this is needed to get the RPI version of the code
 ```
 
 **Note: directory is hereafter referred to as the parent directory**
@@ -140,17 +141,17 @@ To run all of the trajectories that make up the MD swarm, open `launch_swarm.sh`
 ```
 swarmNumber=0
 numberOfTrajsPerSwarm=6
-firstSubjob=0
-lastSubjob=3
-jobName="your_job_name" # no spaces
+number_of_jobs=2
+number_of_gpus_per_replica=1 # note: this should be 1 unless your system is > 500,000 atoms
+
+jobName="test" # no spaces
+partitionName=dcs            #Slurm partition to run job on
 ```
 
 The first 2 variables have already been described and must be consistent with whatever was set in `setup_individual_swarm.sh`.
 
-The next 2 variables have to deal with trajectory subjobs. A single trajectory must be run over many subjobs to achieve the needed desired simulation time. 
-
-`firstSubjob`: is the number of the first subjob, zero indexed. It should be zero, unless a swarm run crashes and needs to be restarted from a given subjob.
-`lastSubjob`: this is `n - number_of_subjobs_you_wish_to_run`
+`number_of_jobs`: the number of subjobs you wish to submit--each subjob consist of running the number of steps defined in `input.py`
+`number_of_gpus_per_replica`: the number of GPUs each subjob should use. This should be one, unless you're running a very large (>500,000 atoms) system, as the scaling across GPUs is NOT linear, and thus inefficient compared to using 1 GPU/subjob (i.e., you'll acquire more ns/day running 2 subjobs on 1 GPU each, thn running 1 subjob on 2 GPUs).
 `jobName`: what you wish to name the job (this will be publically visible in the job scheduler)
 
 Finally, submit the MD swarm to the job scheduler with the following command:
@@ -159,12 +160,12 @@ Finally, submit the MD swarm to the job scheduler with the following command:
 ./launch_swarm.sh
 ```
 
-This command submits subjob # `first_subjob` to run first (for all of the trajectories within this swarm), with subsequent subjobs dependent on the successful completion of prior subjobs runs. 
+This command submits a set of subjobs, with each subsequent subjobs dependent on the successful completion of prior subjobs runs (with the exception that the fist subjob doesn't have a dependency). 
 
 The status of the MD swarm can be checked with the following command:
 
 ```
-squeue -u your_CWID
+squeue 
 ```
 
 ---
