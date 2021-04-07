@@ -21,23 +21,26 @@ This software is already installed for the Weinstein lab. In this section, we de
 Add the following to your `~.bashrc`
 
 ```
-export PATH=$PATH:/athena/hwlab/scratch/lab_data/software/vmd/vmd-1.9.3_athena/install_bin
-export PATH=$PATH:/athena/hwlab/scratch/lab_data/software/vmd/vmd-1.9.3_athena/plugins/LINUXAMD64/bin/catdcd5.1
+export http_proxy=http://proxy:8888
+export https_proxy=$http_proxy
 
-#>>> conda initialize >>>
+export PATH=$PATH:/gpfs/u/home/SMMS/SMMSdrks/barn-shared/NAMD_2.13/NAMD_2.13_Source/Linux-POWER-g++
+export PATH=$PATH:/gpfs/u/home/SMMS/SMMSdrks/barn-shared/vmd-1.9.3/vmd_bin
+
+# >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/athena/hwlab/scratch/lab_data/software/lab_anaconda/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/gpfs/u/barn/SMMS/shared/anaconda3_2020_02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/athena/hwlab/scratch/lab_data/software/lab_anaconda/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/athena/hwlab/scratch/lab_data/software/lab_anaconda/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/gpfs/u/barn/SMMS/shared/anaconda3_2020_02/etc/profile.d/conda.sh" ]; then
+        . "/gpfs/u/barn/SMMS/shared/anaconda3_2020_02/etc/profile.d/conda.sh"
     else
-        export PATH="/athena/hwlab/scratch/lab_data/software/lab_anaconda/anaconda3/bin:$PATH"
+        export PATH="/gpfs/u/barn/SMMS/shared/anaconda3_2020_02/bin:$PATH"
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<</vmd
+# <<< conda initialize <<<
 
 ```
 **Note:** Make SURE there are **NO** other references to (ana)conda or VMD in your `~/.bashrc` or you may get very unpredictable results.
