@@ -5,9 +5,10 @@ module load gcc/8.1.0/1
 module load cuda/10.1
 
 source ~/.bashrc
-conda activate openmm_7.4.0
+conda activate openmm_7.5.0
 
 subjob_number=$1
+number_of_gpus_per_replica=$2
 
 mass_and_parameter_files=\"$(echo 'all_masses.rtf", "'$(echo `ls *.prm` | sed 's/ /\", "/g'))\"
 sed -i "s/parameterz/$mass_and_parameter_files/" ./readInputFiles.py
@@ -27,4 +28,4 @@ then
    fi
 fi
 
-python input.py $subjob_number > python_run.log
+python input.py $subjob_number $number_of_gpus_per_replica > python_run.log

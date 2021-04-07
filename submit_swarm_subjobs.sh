@@ -5,6 +5,7 @@
 
 swarm_number=$1
 number_of_trajs_per_swarm=$2
+number_of_gpus_per_replica=$3
 
 # do not edit below this line
 
@@ -39,7 +40,7 @@ for ((traj_number=0; traj_number<$number_of_trajs_per_swarm; traj_number++)); do
 
     cd $traj_path
 
-    srun -N1 --gres=gpu:32g:1 --mem=100G ./run_python.sh $subjob_number > ./python_log.txt &
+    srun -N1 --gres=gpu:32g:${number_of_gpus_per_replica} --mem=100G ./run_python.sh $subjob_number $number_of_gpus_per_replica > ./python_log.txt &
 done
 
 wait
