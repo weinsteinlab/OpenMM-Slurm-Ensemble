@@ -1,5 +1,5 @@
 # Table of contents:
-- [RPI Setup Environment](#rpi-setup-enviornment)
+- [RPI Setup Environment](#rpi-setup-environment)
 - [Pre-workflow setup](#pre-workflow-setup)
 - [OpenMM Ensemble Workflow](#openmm-ensemble-workflow)
   * [Step 1: Generate swarm directory structure](#step-1-generate-swarm-directory-structure)
