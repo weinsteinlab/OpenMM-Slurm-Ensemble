@@ -1,5 +1,5 @@
 # Table of contents:
-- [Setup Environment](#setup-enviornment)
+- [RPI Setup Environment](#rpi-setup-enviornment)
 - [Pre-workflow setup](#pre-workflow-setup)
 - [OpenMM Ensemble Workflow](#openmm-ensemble-workflow)
   * [Step 1: Generate swarm directory structure](#step-1-generate-swarm-directory-structure)
@@ -8,7 +8,7 @@
   * [Step 4: Repeat steps 1-3!](#step-4-repeat-steps-1-3)
 <!-- toc -->
 ---
-# Setup Environment
+# RPI Setup Environment
 
 This molecular dynamics (MD) adaptive sampling workflow has several software dependencies: 
 
