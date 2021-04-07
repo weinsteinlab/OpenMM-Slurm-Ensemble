@@ -12,7 +12,7 @@
 swarmNumber=0
 numberOfTrajsPerSwarm=6
 number_of_jobs=2
-number_of_gpus_per_replica=2 # note: this should be 1 unless your system is > 500,000 atoms
+number_of_gpus_per_replica=1 # note: this should be 1 unless your system is > 500,000 atoms
 
 jobName="test" # no spaces
 partitionName=dcs            #Slurm partition to run job on
