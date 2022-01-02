@@ -10,8 +10,8 @@
 # use: ./launch_swarm.sh
 
 swarmNumber=0
-numberOfTrajsPerSwarm=72
-number_of_jobs=96
+numberOfTrajsPerSwarm=6
+number_of_jobs=2
 
 jobName="openMM_test_ensemble" # no spaces
 partitionName=edison            #Slurm partition to run job on
