@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 source ~/.bashrc
-conda activate openmm_7_5_1
+conda activate openmm_7_5_0
 
 subjob_number=$1
 
