@@ -84,9 +84,6 @@ setupLog.write("Parameter Files: %s\n\n" % parameter_files)
 restartUsed="TRUE" if (int(subjob_number) > 0) else "FALSE" 
 setupLog.write("Restart file used? %s\n" % restartUsed)
 
-if (int(subjob_number) > 0):
-  setupLog.write("Restart file: %s" % priorRestart )
- 
 setupLog.close()
 
 

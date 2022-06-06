@@ -21,7 +21,7 @@ friction = 1.0/picosecond
 
 
 # Simulation Options
-steps = 1300000
+steps = 80000
 equilibrationSteps = 0
 dcdReporter = DCDReporter(dcd_name, 20000)
 
@@ -45,8 +45,12 @@ simulation.context.setPositions(positions)
 simulation.context.setVelocitiesToTemperature(temperature)
 simulation.currentStep = 0
 
-if int(subjob_number) > 0: simulation.loadState(priorRestart)
-
+if int(subjob_number) > 0: 
+    simulation.loadState(priorRestart)
+    setupLog = open('%s_setupLog.txt' % base_name, 'a')
+    setupLog.write("Restart file: %s" % priorRestart )
+    setupLog.close()
+    
 
 # Simulate
 print('Simulating...')
