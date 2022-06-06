@@ -2,7 +2,7 @@
 
 source ~/.bashrc
 
-if [ $SBATCH_PARTITION == "el8" ]; then
+if [ $SLURM_JOB_PARTITION == "el8" ]; then
     conda activate openmm_7.5.1
 else
     conda activate openmm_7_5_1
