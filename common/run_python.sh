@@ -11,8 +11,9 @@ fi
 subjob_number=$1
 
 echo $SLURM_ARRAY_JOB_ID
+echo "subjob #: "${subjob_number}
 
-if [ $subjob_number > 0 ]
+if [[ $subjob_number -gt 0 ]]
 then
     finished=$(tail -n1 python_run.log)
 
@@ -26,4 +27,4 @@ then
 fi
 
 echo $subjob_number
-python input.py $subjob_number > python_run.log
+python input.py $subjob_number $CUDA_VISIBLE_DEVICES > python_run.log

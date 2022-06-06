@@ -26,6 +26,7 @@ current_directory = os.path.basename(os.getcwd())
 swarm_number  = current_directory.split('_')[0][-4:]
 traj_number   = current_directory.split('_')[1][-4:]
 subjob_number = sys.argv[1]
+gpu_number = sys.argv[2]
 
 base_name="./swarm%s_traj%s_subjob%s" %(str(swarm_number).zfill(4), str(traj_number).zfill(4),str(subjob_number).zfill(4))
 
@@ -97,4 +98,4 @@ psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 
 # Infrastructure description
 platform = Platform.getPlatformByName('CUDA')
-platformProperties = {'DeviceIndex': '0', 'Precision': 'mixed'}
+platformProperties = {'DeviceIndex': gpu_number, 'Precision': 'mixed'}
