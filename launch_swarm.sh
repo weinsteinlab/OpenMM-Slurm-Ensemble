@@ -14,7 +14,7 @@ numberOfTrajsPerSwarm=6
 number_of_jobs=2
 
 jobName="openMM_test_ensemble" # no spaces
-partitionName=edison            #Slurm partition to run job on
+partitionName="el8"            #Slurm partition to run job on
 
 # do not edit below this line
 
@@ -28,9 +28,9 @@ for (( subjob=0; subjob<${number_of_jobs}; subjob++ ))
 do
   if [ $firstIteration -eq 0 ]
   then
-     job_scheduler_output="$(sbatch -J $jobName -N1 -n1 -p $partitionName --cpus-per-task=6 --gres=gpu:1 -t 0-08:00:00 -o ./raw_swarms/submission_logs/${fullJobName}_slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjobs.sh $swarmNumber $numberOfTrajsPerSwarm)"       
+     job_scheduler_output="$(sbatch -J $jobName -N1 -n1 -p $partitionName --cpus-per-task=6 --gres=gpu:1 -t 0-06:00:00 -o ./raw_swarms/submission_logs/${fullJobName}_slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjobs.sh $swarmNumber $numberOfTrajsPerSwarm)"       
   else
-     job_scheduler_output="$(sbatch --depend=afterok:${job_scheduler_number} -J $jobName -N1 -n1 -p $partitionName --cpus-per-task=6 --gres=gpu:1 -t 0-08:00:00 -o ./raw_swarms/submission_logs/${fullJobName}_slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjobs.sh $swarmNumber $numberOfTrajsPerSwarm)" 
+     job_scheduler_output="$(sbatch --depend=afterok:${job_scheduler_number} -J $jobName -N1 -n1 -p $partitionName --cpus-per-task=6 --gres=gpu:1 -t 0-06:00:00 -o ./raw_swarms/submission_logs/${fullJobName}_slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjobs.sh $swarmNumber $numberOfTrajsPerSwarm)" 
   fi
 
   job_scheduler_number=$(echo $job_scheduler_output | awk '{print $4}')
