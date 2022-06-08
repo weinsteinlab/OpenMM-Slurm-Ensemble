@@ -30,6 +30,7 @@ do
   then
      job_scheduler_output="$(sbatch -J $jobName -N1 -n1 -p $partitionName --cpus-per-task=6 --gres=gpu:1 -t 0-06:00:00 -o ./raw_swarms/submission_logs/${fullJobName}_slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjobs.sh $swarmNumber $numberOfTrajsPerSwarm)"       
   else
+     sleep 3
      job_scheduler_output="$(sbatch --depend=afterok:${job_scheduler_number} -J $jobName -N1 -n1 -p $partitionName --cpus-per-task=6 --gres=gpu:1 -t 0-06:00:00 -o ./raw_swarms/submission_logs/${fullJobName}_slurm-%A_%a.out --array=0-${indexed_num_of_trajs} ./submit_swarm_subjobs.sh $swarmNumber $numberOfTrajsPerSwarm)" 
   fi
 
