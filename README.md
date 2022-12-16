@@ -139,8 +139,7 @@ To run all of the trajectories that make up the MD swarm, open `launch_swarm.sh`
 ```
 swarmNumber=0
 numberOfTrajsPerSwarm=6
-firstSubjob=0
-lastSubjob=3
+number_of_jobs=2
 jobName="your_job_name" # no spaces
 ```
 
