@@ -75,10 +75,10 @@ Next, you'll need to populate/edit files in the directory `./inputs`
 `./inputs` should contain a separate subdirectory for each unique system you wish to run. These subdirectories MUST have 4-zero-padded, zero-indexed names (e.g., `0000`, `0001`, `0002`, etc.). Deviating from this nomenclature WILL break the scripts.
 
 Each subdirectory must contain all of the simulation system-specific files needed to simulate your system with openMM:
-*  **ionized.psf**: this protein structure file possesses model structural information (bond connectivity, etc.). The file can be named anything, but must end in .psf, and cannot be a binary file.
-*  **hdat_3_1_restart_coor.pdb**: this protein data bank file contains the initial coordinates for your system. The file can be named anything, but must end in .pdb, and cannot be a binary file.
-*  **hdat_3_1_restart_coor.xsc**: this NAMD-generated extended system configuration file describes the system's periodic cell size for the .pdb described above. The file can be named anything, but must end in .xsc.
-*  **parameters_all36.prm**: this parameter file contains the CHARMM36 parameters needed to simulate your system. Any number of parameters files can be used, and these file can be named anything, but they must end in .prm.
+*  **benserazide_R_pose1.psf**: this protein structure file possesses model structural information (bond connectivity, etc.). The file can be named anything, but must end in .psf, and cannot be a binary file.
+*  **benserazide_R_pose1.pdb**: this protein data bank file contains the initial coordinates for your system. The file can be named anything, but must end in .pdb, and cannot be a binary file.
+*  **benserazide_R_pose1.xsc**: this NAMD-generated extended system configuration file describes the system's periodic cell size for the .pdb described above. The file can be named anything, but must end in .xsc.
+*  **toppar.str**: this file contains a (line-separated) list of all CHARMM36 parameter files needed to simulate your system. Any number of parameters files can be used, and these file can be named anything, but they must end in .prm. Parameter files common to all replicas should be in the directory ./common/toppar. Parameter files unique to a specific replica should be included in its input/XXXX directory. 
 *  **all_masses.rtf**: this file has a description of all the atom types, masses, and elements used by your system. Any number of mass files can be used, and these file can be named anything, but they must end in .rtf.
 *  **input.py**: this python script defines the openMM simulation; it **MUST** be named input.py. Here, the statistical ensemble is selected (e.g. NPT), temperature, and many, many other simulation parameters. The key ones to pay attention to are:
     * steps = 100000: the number of simulation steps per simulation subjob (subjobs are described later), but basically this should be the number of steps that can be run in 2 hours or less.
@@ -90,7 +90,7 @@ Each subdirectory must contain all of the simulation system-specific files neede
 
 **Note:** I recommend only requesting 80% of the number of steps that can be performed in 2 hours. This way, there is little risk of any of the systems running out of time, creating a mess to clean up.
 
-**VERY IMPORTANT:** `input.py` only contains ensemble-related information. All descriptions of input files are automatically understood by what is present in each subdirectory. Do NOT describe input files in this file, or the scripts will break.
+**VERY IMPORTANT:** `input.py` only contains ensemble-related information. All descriptions of input files are automatically understood by what is present in each subdirectory. Do NOT describe/change input file references in this file, or the scripts will break.
 
 Finally, if you only have 1 system to run (with many replicas), just create 1 subdirectory in `inputs`.
 
@@ -146,10 +146,9 @@ jobName="your_job_name" # no spaces
 
 The first 2 variables have already been described and must be consistent with whatever was set in `setup_individual_swarm.sh`.
 
-The next 2 variables have to deal with trajectory subjobs. A single trajectory must be run over many subjobs to achieve the needed desired simulation time. 
+The next variable deals with the number of subjobs to run:A single trajectory must be run over many subjobs to achieve the needed desired simulation time. 
+`number_of_jobs`: how many subjobs to run each replica (each subjob starts using restart files from the previous subjob.
 
-`firstSubjob`: is the number of the first subjob, zero indexed. It should be zero, unless a swarm run crashes and needs to be restarted from a given subjob.
-`lastSubjob`: this is `n - number_of_subjobs_you_wish_to_run`
 `jobName`: what you wish to name the job (this will be publically visible in the job scheduler)
 
 Finally, submit the MD swarm to the job scheduler with the following command:
@@ -171,11 +170,5 @@ squeue -u your_CWID
 ### Step 3: Concatenate swarm subjobs
 
 Needs to be re-written to support multiple systems! Work-in-progress!
----
-
-
-### Step 4: Repeat steps 1-3!
-
-To start the next MD swarm, simply go back to [Step 2](#step-1-generate-swarm-directory-structure) and increment the swarm number (in this example case, the next swarm number is 1).
 
 ---
