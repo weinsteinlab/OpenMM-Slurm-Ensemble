@@ -16,12 +16,12 @@ constraintTolerance = 0.000001
 
 # Integration Options
 dt = 0.004*picoseconds
-temperature = 310.15*kelvin
+temperature = 298*kelvin
 friction = 1.0/picosecond
 
 
 # Simulation Options
-steps = 80000
+steps = 100000
 equilibrationSteps = 0
 dcdReporter = DCDReporter(dcd_name, 20000)
 
@@ -33,7 +33,7 @@ print('Building system...')
 topology = psf.topology
 positions = pdb.positions
 system = psf.createSystem(params, nonbondedMethod=PME, nonbondedCutoff=nonbondedCutoff, constraints=constraints, rigidWater=rigidWater, ewaldErrorTolerance=ewaldErrorTolerance, switchDistance=switchDistance, hydrogenMass=4*amu)
-system.addForce(MonteCarloMembraneBarostat(1.01325*bar, 0*bar*nanometer, 310*kelvin, MonteCarloMembraneBarostat.XYIsotropic, MonteCarloMembraneBarostat.ZFree))
+system.addForce(MonteCarloMembraneBarostat(1.01325*bar, 0*bar*nanometer, temperature, MonteCarloMembraneBarostat.XYIsotropic, MonteCarloMembraneBarostat.ZFree))
 
 integrator = LangevinMiddleIntegrator(temperature, friction, dt)
 integrator.setConstraintTolerance(constraintTolerance)
@@ -45,18 +45,22 @@ simulation.context.setPositions(positions)
 simulation.context.setVelocitiesToTemperature(temperature)
 simulation.currentStep = 0
 
-if int(subjob_number) > 0: 
+
+setupLog = open('%s_setupLog.txt' % base_name, 'a')
+if 'priorRestart' in locals() and "xml" in priorRestart:
     simulation.loadState(priorRestart)
-    setupLog = open('%s_setupLog.txt' % base_name, 'a')
     setupLog.write("Restart file: %s" % priorRestart )
-    setupLog.close()
-    
+else:
+    setupLog.write("Restart file used? FALSE")
+setupLog.close()
 
 # Simulate
 print('Simulating...')
 simulation.reporters.append(dcdReporter)
 simulation.reporters.append(dataReporter)
-simulation.step(steps)
+simulation.currentStep = 0
+#simulation.step(steps)
+simulation.runForClockTime(5, checkpointFile=None, stateFile='final_state_file2.xml',checkpointInterval=1)
 simulation.saveState('final_state_file.xml')
 
 positions = simulation.context.getState(getPositions=True).getPositions()
