@@ -4,7 +4,6 @@
 - [OpenMM Ensemble Workflow](#openmm-ensemble-workflow)
   * [Step 1: Generate swarm directory structure](#step-1-generate-swarm-directory-structure)
   * [Step 2: Launching a swarm](#step-2-launching-a-swarm)
-  * [Step 3: Concatenate swarm subjobs](#step-3-concatenate-swarm-subjobs)
 <!-- toc -->
 ---
 # Setup Environment
