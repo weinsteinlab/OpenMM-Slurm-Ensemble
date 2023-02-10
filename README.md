@@ -12,7 +12,7 @@ This molecular dynamics (MD) adaptive sampling workflow has several software dep
 
 *  openMM, 
 *  VMD,
-*  several python libraries
+*  openMM python package
 
 # Pre-workflow setup
 
