@@ -15,10 +15,6 @@ This molecular dynamics (MD) adaptive sampling workflow has several software dep
 *  VMD,
 *  several python libraries
 
-In this section, we describe how to setup your environment to use these installations.
-
-That's it--if everything went correctly, all dependencies needed for this workflow should now be available!
-
 # Pre-workflow setup
 
 **Note:** you can skip the pre-workflow setup if you are just running the test system found in this repository.
@@ -134,13 +130,6 @@ This command submits subjob # `first_subjob` to run first (for all of the trajec
 The status of the MD swarm can be checked with the following command:
 
 ```
-squeue -u your_CWID
+squeue -u your_username
 ```
 
----
-
-### Step 3: Concatenate swarm subjobs
-
-Needs to be re-written to support multiple systems! Work-in-progress!
-
----
