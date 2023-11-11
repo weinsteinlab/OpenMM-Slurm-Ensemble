@@ -5,7 +5,7 @@ source ~/.bashrc
 if [ $SLURM_JOB_PARTITION == "el8" ]; then
     conda activate openmm_7.7.0
 else
-    conda activate openmm_7_7_0
+    conda activate /athena/hwlab/scratch/lab_software/anaconda3_2021.05/envs/openmm_7_7_0
 fi
 
 subjob_number=$1
