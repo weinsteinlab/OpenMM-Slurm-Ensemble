@@ -98,4 +98,4 @@ psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 
 # Infrastructure description
 platform = Platform.getPlatformByName('CUDA')
-platformProperties = {'DeviceIndex': gpu_number, 'Precision': 'mixed'}
+platformProperties = {'DeviceIndex': str(gpu_number), 'Precision': 'mixed'}
