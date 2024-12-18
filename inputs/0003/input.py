@@ -60,7 +60,7 @@ simulation.reporters.append(dcdReporter)
 simulation.reporters.append(dataReporter)
 simulation.currentStep = 0
 #simulation.step(steps)
-simulation.runForClockTime(5, checkpointFile=None, stateFile='final_state_file2.xml',checkpointInterval=1)
+simulation.runForClockTime(0.1, checkpointFile=None, stateFile='final_state_file2.xml',checkpointInterval=1)
 simulation.saveState('final_state_file.xml')
 
 positions = simulation.context.getState(getPositions=True).getPositions()

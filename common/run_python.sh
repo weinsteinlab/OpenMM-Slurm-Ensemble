@@ -27,4 +27,5 @@ then
 fi
 
 echo $subjob_number
-python input.py $subjob_number $CUDA_VISIBLE_DEVICES > python_run.log
+#python input.py $subjob_number $CUDA_VISIBLE_DEVICES > python_run.log
+python input.py $subjob_number 0 > python_run.log
