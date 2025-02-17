@@ -39,9 +39,10 @@ do
       -t 0-06:00:00 \
       -o ./raw_swarms/submission_logs/${fullJobName}_launcher_slurm-%A.out \
       ./run_and_wait_array.sh $swarmNumber $numberOfTrajsPerSwarm $jobName $partitionName)"
+    sleep 3
   else
     # Wait a few seconds to avoid overwhelming the scheduler
-    sleep 3
+    sleep 1
     job_scheduler_output="$(sbatch \
       --depend=afterok:${job_scheduler_number} \
       -J $jobName \

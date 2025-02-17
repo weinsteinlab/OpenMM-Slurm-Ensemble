@@ -39,11 +39,15 @@ fi
 echo "Submitted array job: ${array_job_id}. Waiting for it to complete..."
 
 # Wait until the array job no longer appears in the queue
-while squeue -j ${array_job_id} &>/dev/null; do
+while squeue -j ${array_job_id} | grep -q "${array_job_id}"; do
     sleep 10
 done
 
-echo "Array job ${array_job_id} completed successfully."
 
-exit 0
+if scontrol show job ${array_job_id} | grep "ExitCode=" | grep -qv "ExitCode=0:0"; then
+    exit 1  # At least one exit code is not 0:0
+else
+    exit 0  # All exit codes are 0:0
+fi
+
 
