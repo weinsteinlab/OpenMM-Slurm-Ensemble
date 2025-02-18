@@ -10,7 +10,7 @@
 # Use: ./setup_individual.sh 
 
 swarm_number=0
-number_of_trajs_per_swarm=6
+number_of_trajs_per_swarm=12
 
 # do not edit below this line
 
@@ -37,6 +37,7 @@ do
   cp ./common/readInputFiles.py $traj_path/.
   cp ./common/run_python.sh $traj_path/.
   cp ./inputs/${directoryNumberPadded}/*.* $traj_path/.
+  echo "FINISHED" > $traj_path/python_run.log
   ((currentNumberOfReplicas--))
 
   if [ $currentNumberOfReplicas -eq 0 ] && [ $traj_number -lt $((number_of_trajs_per_swarm - 1)) ]  
