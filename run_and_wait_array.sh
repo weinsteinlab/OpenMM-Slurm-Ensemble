@@ -21,6 +21,7 @@ while true; do
     -J "${jobName}" \
     -N1 -n1 \
     -p "${partitionName}" \
+    --requeue \
     --cpus-per-task=6 \
     --gres=gpu:1 \
     -t 0-06:00:00 \
@@ -57,25 +58,7 @@ while true; do
     if echo "$output" | grep -q "${array_job_id}"; then
         sleep 10
     else
-        break
+        exit 0
     fi
 done
-
-
-while true; do
-  # Attempt to retrieve job details
-  if ! output=$(scontrol show job "${array_job_id}" 2>&1); then
-    echo "Error running scontrol. Retrying in 10 seconds..."
-    sleep 10
-    continue
-  fi
-
-  # Check the ExitCode in the output. If any ExitCode is not 0:0, exit with 1.
-  if echo "$output" | grep "ExitCode=" | grep -qv "ExitCode=0:0"; then
-    exit 1  # At least one exit code is not 0:0
-  else
-    exit 0  # All exit codes are 0:0
-  fi
-done
-
 

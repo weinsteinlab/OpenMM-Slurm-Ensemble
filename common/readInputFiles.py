@@ -44,7 +44,9 @@ pdb = PDBFile(sorted(glob.glob('*.pdb'))[0])
 params = read_params('./toppar.str')
 
 if (int(subjob_number) > 0):
-  priorRestart = sorted(glob.glob('*.xml'))[-1]
+  #priorRestart = sorted(glob.glob('*.xml'))[-1]
+  prior_subjob = int(subjob_number) - 1
+  priorRestart = "./swarm%s_traj%s_subjob%s_statefile.xml" %(str(swarm_number).zfill(4), str(traj_number).zfill(4),str(prior_subjob).zfill(4))
 
 # Compute the box dimensions from the coordinates and set the box lengths (only
 # orthorhombic boxes are currently supported in OpenMM)

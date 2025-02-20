@@ -10,7 +10,7 @@
 # use: ./launch_swarm.sh
 
 swarmNumber=0
-numberOfTrajsPerSwarm=12
+numberOfTrajsPerSwarm=60
 number_of_jobs=4
 
 jobName="openMM_test_ensemble" # no spaces

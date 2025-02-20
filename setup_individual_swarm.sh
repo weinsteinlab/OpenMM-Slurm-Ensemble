@@ -10,7 +10,7 @@
 # Use: ./setup_individual.sh 
 
 swarm_number=0
-number_of_trajs_per_swarm=12
+number_of_trajs_per_swarm=60
 
 # do not edit below this line
 
