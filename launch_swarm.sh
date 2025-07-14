@@ -14,7 +14,7 @@ numberOfTrajsPerSwarm=12
 number_of_jobs=4
 
 jobName="openMM_test_ensemble" # no spaces
-partitionName="el8,dcs-2024"            # Slurm partition for RPI
+partitionName="el8"            # Slurm partition for RPI
 #partitionName="hwlab-rocky-gpu,scu-gpu"  
 
 # do not edit below this line
